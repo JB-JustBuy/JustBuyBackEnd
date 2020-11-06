@@ -13,8 +13,7 @@ class ShoppeDataController(object):
         else:
             self.driver_path = driver_path
         self.driver = self.get_driver()
-        self.email = "s88037zz@gmail.com"
-        self.passwd = 's88037zz'
+        self.platform = "shoppe"
         self.products = []
 
     def login(self):
@@ -33,11 +32,17 @@ class ShoppeDataController(object):
         prefs = {'profile.default_content_settings.popups': 0,
                  'download.default_directory': self.save_path,
                  'directory_upgrade': True}
+
         options.add_experimental_option('prefs', prefs)
+        # hide the web driver window
+        options.add_argument("--headless")
         return options
 
     def search(self, search_key):
         self.driver.get(self.url+search_key)
+        time.sleep(3)
+        self.parser()
+        self.driver.quit()
 
     def parser(self):
         elem_row = self.driver.find_element_by_xpath("//div[@class='row shopee-search-item-result__items']")
@@ -48,14 +53,16 @@ class ShoppeDataController(object):
 
         for index, (name, link, price) in enumerate(zip(elem_names, elem_links, elem_prices)):
             print("Index:", index)
-            print(' name:{}, price:{}\n link:{}\n'.format(name.get_attribute("innerHTML").splitlines()[0],
-                                                          price.get_attribute("innerHTML").splitlines()[0],
-                                                          link.get_attribute("href")))
+            print(' name:{}, platform:{}, price:{}\n link:{}\n'.format(name.get_attribute("innerHTML").splitlines()[0],
+                                                                    self.platform,
+                                                                    price.get_attribute("innerHTML").splitlines()[0],
+                                                                    link.get_attribute("href")))
             if index >= len(elem_ads):
                 product = {
                     "name": name.get_attribute("innerHTML").splitlines()[0],
                     "price":  price.get_attribute("innerHTML").splitlines()[0],
                     "url": link.get_attribute("href"),
+                    "platform": self.platform
                 }
                 self.products.append(product)
 
@@ -69,6 +76,4 @@ if __name__ == '__main__':
     print(os.path.abspath(os.path.join(os.path.pardir, '../chromedriver')))
     dc = ShoppeDataController()
     dc.search('羅技G604')
-    time.sleep(5)
-    dc.parser()
     print(dc.products)

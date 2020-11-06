@@ -2,6 +2,8 @@ from src.payment.payment import Payment
 
 
 class CreditCard(Payment):
-    def __init__(self, methods):
+    def __init__(self, name, belong_to=None):
         super().__init__()
-        self.methods = methods
+        self.belong_to = belong_to
+        self.name = name
+        self.type = "Credit Card"

@@ -13,8 +13,7 @@ class PChomeDataController(object):
         else:
             self.driver_path = driver_path
         self.driver = self.get_driver()
-        self.email = "s88037zz@gmail.com"
-        self.passwd = 's88037zz'
+        self.platform = "pchome"
         self.products = []
 
     def login(self):
@@ -34,10 +33,16 @@ class PChomeDataController(object):
                  'download.default_directory': self.save_path,
                  'directory_upgrade': True}
         options.add_experimental_option('prefs', prefs)
+
+        # hide the web driver window
+        #options.add_argument("--headless")
         return options
 
     def search(self, search_key):
         self.driver.get(self.url+search_key)
+        time.sleep(3)
+        self.parser()
+        self.driver.quit()
 
     def parser(self):
         elem_item_contain = self.driver.find_element_by_xpath('//div[@id="ItemContainer"]')
@@ -47,8 +52,8 @@ class PChomeDataController(object):
             price = self.get_price(elem_item)
             url = self.get_url(elem_item)
             print("Index:", index)
-            print(" name:{}, price:{},\n url:{}".format(name, price, url))
-            self.products.append({"name": name, "price": price, "url": url})
+            print(" name:{}, platform:{} ,price:{},\n url:{}\n".format(name, self.platform,price, url))
+            self.products.append({"name": name, "price": price, "url": url, "platform": self.platform})
 
     def get_name(self, elem):
         elem_name = elem.find_element_by_class_name('prod_name')
@@ -71,6 +76,3 @@ if __name__ == '__main__':
     print(os.path.abspath(os.path.join(os.path.pardir, '../chromedriver')))
     dc = PChomeDataController()
     dc.search('羅技G604')
-    time.sleep(5)
-    dc.parser()
-    print(dc.products)

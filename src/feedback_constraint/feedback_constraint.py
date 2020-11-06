@@ -3,9 +3,10 @@ import abc
 
 class FeedBackConstraint(metaclass=abc.ABCMeta):
     def __init__(self):
-        self.constraint = None
+        self.amount = None
         self.platform = None
+        self.md_type = None
 
     @abc.abstractmethod
-    def is_satisfied(self, merchandises):
+    def qualify(self, merchandises):
         pass

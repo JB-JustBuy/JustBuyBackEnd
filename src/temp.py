@@ -5,4 +5,4 @@ class B(A):
     value = 1
 
 b = B()
-print(isinstance(b, B))
+print(isinstance(b, A))
