@@ -1,11 +1,16 @@
 import numpy as np
+
 class Merchandise(object):
-    def __init__(self, name, price, platform, url, md_type=None):
+    def __init__(self, name, price, platform, url, md_type=None, quantity=1):
         self.name = name
         self.price = price
         self.platform = platform
         self.url = url
         self.md_type = md_type
+        if quantity >= 1:
+            self.quantity = quantity
+        else:
+            raise Exception("Merchandise Quantity need to bigger than 0.")
 
     @staticmethod
     def generate_merchandises(products):

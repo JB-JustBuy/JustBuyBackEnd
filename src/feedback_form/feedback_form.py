@@ -7,5 +7,5 @@ class FeedBackForm(metaclass=abc.ABCMeta):
         self.pct = None
 
     @abc.abstractmethod
-    def feedback(self, price):
+    def feedback(self, price=None):
         pass

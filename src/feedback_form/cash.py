@@ -7,7 +7,7 @@ class Cash(FeedBackForm):
         self.amount = amount
         self.pct = pct
 
-    def feedback(self, price):
+    def feedback(self, price=None):
         # sum of feedback from amount and percentage
         fd_amount = self.amount if self.amount else 0
         fd_pct = price * self.pct if self.pct else 0

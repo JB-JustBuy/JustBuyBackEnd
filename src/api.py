@@ -8,6 +8,7 @@ app = Flask("just_buy")
 app.config.from_object(DevConfig)
 CORS(app)
 
+
 @app.route('/', methods=['GET'])
 def index():
     data = request.get_json()

@@ -1,5 +1,5 @@
 from src.feedback_constraint.single_full import SingleFull
-
+from src.feedback_constraint.quantity_enough import QuantityEnough
 
 class FeedBackMethod(object):
     def __init__(self, constraint, form):
@@ -21,4 +21,5 @@ class FeedBackMethod(object):
         if isinstance(self.constraint, SingleFull):
             price = self.constraint.amount
             return self.form.feedback(price)
-
+        elif isinstance(self.constraint, QuantityEnough):
+            return self.form.feedback()

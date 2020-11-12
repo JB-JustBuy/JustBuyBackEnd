@@ -6,7 +6,8 @@ class FeedBackConstraint(metaclass=abc.ABCMeta):
         self.amount = None
         self.platform = None
         self.md_type = None
-
+        self.quantity = None
     @abc.abstractmethod
     def qualify(self, merchandises):
         pass
+
