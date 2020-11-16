@@ -1,5 +1,5 @@
-from src.pchome_data_controller import PChomeDataController
-from src.shoppe_data_controller import ShoppeDataController
+from src.scraper.pchome_data_controller import PChomeDataController
+from src.scraper.shoppe_data_controller import ShoppeDataController
 from src.merchandise.merchandise import Merchandise
 from src.feedback_method.feedback_method import FeedBackMethod
 from src.feedback_constraint.single_full import SingleFull
