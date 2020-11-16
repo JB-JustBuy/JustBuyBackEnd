@@ -1,5 +1,5 @@
-from src.feedback_form.gift import Gift
-from src.merchandise.merchandise import Merchandise
+from src.utilities.feedback_form.gift import Gift
+from src.utilities.merchandise.merchandise import Merchandise
 import unittest
 
 

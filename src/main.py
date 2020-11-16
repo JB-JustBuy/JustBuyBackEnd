@@ -1,10 +1,10 @@
-from src.scraper.pchome_data_controller import PChomeDataController
-from src.scraper.shoppe_data_controller import ShoppeDataController
-from src.merchandise.merchandise import Merchandise
-from src.feedback_method.feedback_method import FeedBackMethod
-from src.feedback_constraint.single_full import SingleFull
-from src.feedback_form.cash import Cash
-from src.payment.credit_card import CreditCard
+from src.utilities.scraper.pchome_data_controller import PChomeDataController
+from src.utilities.scraper.shoppe_data_controller import ShoppeDataController
+from src.utilities.merchandise.merchandise import Merchandise
+from src.utilities.feedback_method.feedback_method import FeedBackMethod
+from src.utilities.feedback_constraint.single_full import SingleFull
+from src.utilities.feedback_form.cash import Cash
+from src.utilities.payment.credit_card import CreditCard
 keyword = input("Please input the product name and mode:")
 
 pchome = PChomeDataController()

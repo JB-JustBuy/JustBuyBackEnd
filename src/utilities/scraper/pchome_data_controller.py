@@ -1,14 +1,12 @@
-from selenium import webdriver
-from selenium.webdriver import ActionChains
-from src.scraper.scraper import Scraper
-import time, os
+from src.utilities.scraper.scraper import Scraper
+import os
 
 
 class PChomeDataController(Scraper):
     def __init__(self, driver_path=None):
         super().__init__()
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
-        self.save_path = os.path.abspath(os.path.join("../..", "..", "data"))
+        self.save_path = os.path.abspath(os.path.join("../../..", "..", "data"))
         if driver_path is None:
             self.driver_path = os.path.abspath(os.path.join(os.path.pardir, 'chromedriver'))
         else:
@@ -49,7 +47,7 @@ class PChomeDataController(Scraper):
         return price
 
 if __name__ == '__main__':
-    print(os.path.abspath(os.path.join(os.path.pardir, '../../chromedriver')))
+    print(os.path.abspath(os.path.join(os.path.pardir, '../../../chromedriver')))
     dc = PChomeDataController()
     dc.search(['羅技G604'])
     print(dc.result)

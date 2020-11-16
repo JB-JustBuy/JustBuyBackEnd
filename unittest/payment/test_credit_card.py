@@ -1,9 +1,6 @@
 import unittest
-from src.payment.credit_card import CreditCard
-from src.feedback_method.feedback_method import FeedBackMethod
-from src.feedback_constraint.single_full import SingleFull
-from src.feedback_form.cash import Cash
-from src.merchandise.merchandise import Merchandise
+from src.utilities.payment.credit_card import CreditCard
+from src.utilities.merchandise.merchandise import Merchandise
 
 
 class TestCreditCard(unittest.TestCase):
