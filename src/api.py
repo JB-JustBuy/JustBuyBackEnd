@@ -3,14 +3,18 @@ from flask_restful import Api
 from flask_cors import CORS
 from src.resources.user_controller import UserController
 from src.resources.search_merchandise_controller import SearchMerchandiseController
+
+
 class DevConfig(object):
     DEBUG = True
 
 
 app = Flask("just_buy")
-api = Api(app)
 app.config.from_object(DevConfig)
-CORS(app)
+CORS(app, origin="*", allow_headers=[
+    "Content-Type", "Authorization", "Access-Control-Allow-Credentials"
+], supports_credentials=True)
+api = Api(app)
 
 
 @app.route('/', methods=['GET'])

@@ -8,24 +8,23 @@ class PChomeDataController(Scraper):
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
         self.save_path = os.path.abspath(os.path.join("../../..", "..", "data"))
         if driver_path is None:
-            self.driver_path = os.path.abspath(os.path.join(os.path.pardir, 'chromedriver'))
+            self.driver_path = os.path.abspath(os.path.join(__file__, '../../../../chromedriver'))
         else:
             self.driver_path = driver_path
         self.driver = self.get_driver()
         self.platform = "pchome"
-        self.result = {}
 
     def parser(self):
         elem_item_contain = self.driver.find_element_by_xpath('//div[@id="ItemContainer"]')
         elem_items = elem_item_contain.find_elements_by_tag_name('dl')
-        products = []
+        products = {}
         for index, elem_item in enumerate(elem_items):
             name = self._get_name(elem_item)
             price = self._get_price(elem_item)
             url = self._get_url(elem_item)
             print("Index:", index)
             print(" name:{}, platform:{} ,price:{},\n url:{}\n".format(name, self.platform,price, url))
-            products.append({"name": name, "price": price, "url": url, "platform": self.platform})
+            products[index] = ({"name": name, "price": price, "url": url, "platform": self.platform})
 
         return products
 
@@ -47,7 +46,7 @@ class PChomeDataController(Scraper):
         return price
 
 if __name__ == '__main__':
-    print(os.path.abspath(os.path.join(os.path.pardir, '../../../chromedriver')))
+    print(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
     dc = PChomeDataController()
-    dc.search(['羅技G604'])
+    #dc.search(['羅技G604'])
     print(dc.result)

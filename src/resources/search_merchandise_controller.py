@@ -1,15 +1,12 @@
-from flask_restful import Resource, request
+from flask_restful import Resource, request, ResponseBase
 from src.utilities.scraper.shoppe_data_controller import ShoppeDataController
+import json
 
 
 class SearchMerchandiseController(Resource):
     def get(self):
-        key_words = request.args.get("key_word").split(' ')
+        key_words = request.args.get("keyword").split(' ')
         scraper = ShoppeDataController()
         scraper.search(key_words)
-        result = scraper.result
-        return {
-            "message": "",
-            "key_words": key_words,
-            "result": result
-        },  200
+        result = json.dumps(scraper.result, indent=1)
+        return result,  200
