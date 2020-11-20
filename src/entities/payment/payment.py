@@ -1,4 +1,4 @@
-from src.utilities.feedback_method.feedback_method import FeedBackMethod
+from src.entities.feedback_method.feedback_method import FeedBackMethod
 import abc
 import numpy as np
 

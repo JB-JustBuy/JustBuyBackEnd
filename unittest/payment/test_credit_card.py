@@ -1,6 +1,6 @@
 import unittest
-from src.utilities.payment.credit_card import CreditCard
-from src.utilities.merchandise.merchandise import Merchandise
+from src.entities.payment.credit_card import CreditCard
+from src.entities.merchandise.merchandise import Merchandise
 
 
 class TestCreditCard(unittest.TestCase):

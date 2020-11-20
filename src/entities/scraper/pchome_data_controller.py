@@ -1,4 +1,4 @@
-from src.utilities.scraper.scraper import Scraper
+from src.entities.scraper.scraper import Scraper
 import os
 
 

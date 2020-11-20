@@ -1,4 +1,4 @@
-from src.utilities.feedback_constraint.feedback_constraint import FeedBackConstraint
+from src.entities.feedback_constraint.feedback_constraint import FeedBackConstraint
 
 
 class SingleFull(FeedBackConstraint):

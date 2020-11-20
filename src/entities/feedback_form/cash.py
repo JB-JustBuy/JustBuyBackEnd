@@ -1,4 +1,4 @@
-from src.utilities.feedback_form.feedback_form import FeedBackForm
+from src.entities.feedback_form.feedback_form import FeedBackForm
 
 
 class Cash(FeedBackForm):

@@ -1,4 +1,4 @@
-from src.utilities.feedback_form.cash import Cash
+from src.entities.feedback_form.cash import Cash
 import unittest
 
 

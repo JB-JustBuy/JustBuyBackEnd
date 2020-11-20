@@ -1,5 +1,5 @@
-from flask_restful import Resource, request, ResponseBase
-from src.utilities.scraper.shoppe_data_controller import ShoppeDataController
+from flask_restful import Resource, request
+from src.entities.scraper.shoppe_data_controller import ShoppeDataController
 import json
 
 

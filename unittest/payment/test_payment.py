@@ -1,9 +1,9 @@
 import unittest
-from src.utilities.payment.payment import Payment
-from src.utilities.feedback_method.feedback_method import FeedBackMethod
-from src.utilities.feedback_constraint.single_full import SingleFull
-from src.utilities.feedback_form.cash import Cash
-from src.utilities.merchandise.merchandise import Merchandise
+from src.entities.payment.payment import Payment
+from src.entities.feedback_method.feedback_method import FeedBackMethod
+from src.entities.feedback_constraint.single_full import SingleFull
+from src.entities.feedback_form.cash import Cash
+from src.entities.merchandise.merchandise import Merchandise
 
 class TestPayment(unittest.TestCase):
     def setUp(self):

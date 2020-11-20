@@ -1,5 +1,5 @@
-from src.utilities.feedback_constraint.single_full import SingleFull
-from src.utilities.feedback_constraint.quantity_enough import QuantityEnough
+from src.entities.feedback_constraint.single_full import SingleFull
+from src.entities.feedback_constraint.quantity_enough import QuantityEnough
 
 class FeedBackMethod(object):
     def __init__(self, constraint, form):
