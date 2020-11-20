@@ -3,25 +3,18 @@ from src.repository.repository import Repository
 
 
 class SignUpController(Resource):
+    def __init__(self, **kwargs):
+        self.rp_config = kwargs["repository"]
+        self.rp = Repository(self.rp_config)
+
     def get(self):
-        data = {
-            "database": "just_buy",
-            "collection": "users"
-        }
-        user_rp = Repository(data)
-        response = user_rp.read()
+        response = self.rp.read()
         return {
             "message": "success",
             "response": response
         }, 200
 
     def post(self,):
-        data = {
-            "database": "just_buy",
-            "collection": "users"
-        }
-        user_rp = Repository(data)
-
         parser = reqparse.RequestParser()
         parser.add_argument("username", required=True, help="username is required.")
         parser.add_argument('email', required=True, help="email is required.")
@@ -33,10 +26,11 @@ class SignUpController(Resource):
                 "account": arg["username"],
                 "email": arg['email'],
                 "password": arg["password"],
-                'confirmPasswodd': arg['confirmPassword']
+                'confirmPassword': arg['confirmPassword']
             }
         }
-        response = user_rp.write(data)
+        response = self.rp.write(data)
+
         return {
             "message": "success",
             "res": response

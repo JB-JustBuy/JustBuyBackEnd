@@ -9,6 +9,9 @@ class DevConfig(object):
     DEBUG = True
 
 
+
+
+
 app = Flask("just_buy")
 app.config.from_object(DevConfig)
 CORS(app, origin="*", allow_headers=[
@@ -25,7 +28,13 @@ def index():
 
 
 api.add_resource(SearchMerchandiseController, "/search")
-api.add_resource(SignUpController, '/signup/')
+api.add_resource(SignUpController, '/signup/',
+                 resource_class_kwargs={
+                    "repository":{
+                        "database": "just_buy",
+                        "collection": "users"
+                    }
+                 })
 
 if __name__ == "__main__":
     app.run()

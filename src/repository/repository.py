@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 
+
 class Repository:
     def __init__(self, data):
         self.client = MongoClient("mongodb://localhost:27017/")
@@ -8,6 +9,10 @@ class Repository:
         cursor = self.client[database]
         self.collection = cursor[collection]
         self.data = data
+        # self.client = None
+        # self.cursor =  None
+        # self.collection = None
+
 
     def read(self):
         documents = self.collection.find()
@@ -41,6 +46,7 @@ class Repository:
             if response.deleted_count > 0 else "Document not found."
         }
         return output
+
 
 if __name__ == '__main__':
     from datetime import datetime
