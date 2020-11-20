@@ -1,5 +1,5 @@
-from src.feedback_form.feedback_form import FeedBackForm
-from src.merchandise.merchandise import Merchandise
+from src.entities.feedback_form.feedback_form import FeedBackForm
+from src.entities.merchandise.merchandise import Merchandise
 
 
 class Gift(FeedBackForm):

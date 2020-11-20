@@ -1,5 +1,5 @@
-from src.feedback_constraint.quantity_enough import QuantityEnough
-from src.merchandise.merchandise import Merchandise
+from src.entities.feedback_constraint.quantity_enough import QuantityEnough
+from src.entities.merchandise.merchandise import Merchandise
 import unittest
 
 

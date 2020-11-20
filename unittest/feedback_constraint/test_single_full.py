@@ -1,5 +1,5 @@
-from src.feedback_constraint.single_full import SingleFull
-from src.merchandise.merchandise import Merchandise
+from src.entities.feedback_constraint.single_full import SingleFull
+from src.entities.merchandise.merchandise import Merchandise
 import unittest
 
 

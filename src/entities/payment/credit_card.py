@@ -1,4 +1,4 @@
-from src.payment.payment import Payment
+from src.entities.payment.payment import Payment
 
 
 class CreditCard(Payment):
