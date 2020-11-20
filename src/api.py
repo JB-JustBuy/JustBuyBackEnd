@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Api
 from flask_cors import CORS
-from src.resources.user_controller import UserController
+from src.resources.sign_up import SignUpController
 from src.resources.search_merchandise_controller import SearchMerchandiseController
 
 
@@ -25,7 +25,7 @@ def index():
 
 
 api.add_resource(SearchMerchandiseController, "/search")
-api.add_resource(UserController, '/user/')
+api.add_resource(SignUpController, '/signup/')
 
 if __name__ == "__main__":
     app.run()
