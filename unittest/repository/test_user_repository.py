@@ -9,6 +9,28 @@ class TestUserRepository(unittest.TestCase):
             'collection': 'users'
         })
 
+
+    def test_exist_in_repositeory(self):
+        data = {
+            "username": 'testusername001',
+            'email': 'testusername001@gmail.com',
+            'password': "testpassword001",
+            'confirmPassword': 'testpassword001'
+        }
+        self.user_rp.write({"document": data})
+        self.assertTrue(self.user_rp.is_exist(data))
+        self.user_rp.delete({"query": data})
+
+    def test_validate_format(self):
+        data = {
+            "username": 'testusername001',
+            'email': 'testusername001@gmail.com',
+            'password': "testpassword001",
+            'confirmPassword': 'testpassword001'
+        }
+        res = self.user_rp.validate_format(data)
+        self.assertEqual("success", res['status'])
+
     def test_validate_username(self):
         username = 't1'
         self.assertEqual("length of username needs to bigger than 6", self.user_rp._UserRepository__validate_username(username)[0])
