@@ -5,13 +5,30 @@ import re
 class UserRepository(Repository):
     def __init__(self, data):
         super().__init__(data)
+    #
+    # def add_user(self, data):
+    #     message = []
+    #     if self.__is_exist(data):
+    #         message.append("user")
+    #
+    def __is_exist(self, data) -> str:
+        message = ""
 
-    def is_exist(self, data):
-        res = self.collection.find(data)
-        print("res", res)
-        return True if res else False
+        res = self.collection.find({'username': data['username']})
+        res = [{item: data[item] for item in data if item != '_id'} for data in res]
+        print(res)
+        if len(res) != 0:
+            message = 'This username has been used'
 
-    def validate_format(self, data:dict) -> dict:
+        res = self.collection.find({'email': data['email']})
+        res = [{item: data[item] for item in data if item != '_id'} for data in res]
+        print(res)
+        if len(res) != 0:
+            message = 'This email has registered'
+
+        return message
+
+    def __validate_format(self, data:dict) -> dict:
         check_username_result = self.__validate_username(data['username'])
         check_email_result = self.__validate_email(data['email'])
         check_password_result = self.__validate_password(data['password'])
@@ -27,7 +44,7 @@ class UserRepository(Repository):
         message = []
         if len(username) < 6:
             message.append('length of username needs to bigger than 6')
-        if re.search(r"\W", username) is not None:
+        elif re.search(r"\W", username) is not None:
             message.append('username cant use symbol')
         return message
 

@@ -9,17 +9,33 @@ class TestUserRepository(unittest.TestCase):
             'collection': 'users'
         })
 
-
-    def test_exist_in_repositeory(self):
-        data = {
+        self.data = {
             "username": 'testusername001',
             'email': 'testusername001@gmail.com',
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        self.user_rp.write({"document": data})
-        self.assertTrue(self.user_rp.is_exist(data))
-        self.user_rp.delete({"query": data})
+        self.user_rp.write(data={"document": self.data})
+
+    def tearDown(self):
+        self.user_rp.delete(data={'query':self.data})
+
+    def test_exist_in_repositeory(self):
+        data = {
+            "username": 'testusername001',
+            'email': 'testuseranme002@gmail.com',
+            'password': "testpassword001",
+            'confirmPassword': 'testpassword001'
+        }
+        self.assertEqual('This username has been used', self.user_rp._UserRepository__is_exist(data))
+
+        data = {
+            "username": 'testusername002',
+            'email': 'testusername001@gmail.com',
+            'password': "testpassword001",
+            'confirmPassword': 'testpassword001'
+        }
+        self.assertEqual('This email has registered', self.user_rp._UserRepository__is_exist(data))
 
     def test_validate_format(self):
         data = {
