@@ -1,11 +1,11 @@
 from flask_restful import Resource, reqparse
-from src.repository.repository import Repository
+from src.repository.user_respository import UserRepository
 
 
 class SignUpController(Resource):
     def __init__(self, **kwargs):
         self.rp_config = kwargs["repository"]
-        self.rp = Repository(self.rp_config)
+        self.rp = UserRepository(self.rp_config)
 
     def get(self):
         response = self.rp.read()
@@ -19,7 +19,7 @@ class SignUpController(Resource):
         parser.add_argument("username", required=True, help="username is required.")
         parser.add_argument('email', required=True, help="email is required.")
         parser.add_argument('password', required=True, help="password is required.")
-        parser.add_argument('confirmPassword', required=True, help="password is required.")
+        parser.add_argument('confirmPassword', required=True, help="confirmPassword is required.")
         arg = parser.parse_args()
         data = {
             "document": {
@@ -29,7 +29,7 @@ class SignUpController(Resource):
                 'confirmPassword': arg['confirmPassword']
             }
         }
-        response = self.rp.write(data)
+        response = self.rp.signup(data)
 
         return {
             "message": "success",

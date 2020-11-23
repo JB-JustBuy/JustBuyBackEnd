@@ -6,45 +6,52 @@ class UserRepository(Repository):
     def __init__(self, data):
         super().__init__(data)
     #
-    # def add_user(self, data):
-    #     message = []
-    #     if self.__is_exist(data):
-    #         message.append("user")
-    #
-    def __is_exist(self, data) -> str:
-        message = ""
 
-        res = self.collection.find({'username': data['username']})
-        res = [{item: data[item] for item in data if item != '_id'} for data in res]
-        print(res)
-        if len(res) != 0:
-            message = 'This username has been used'
-
-        res = self.collection.find({'email': data['email']})
-        res = [{item: data[item] for item in data if item != '_id'} for data in res]
-        print(res)
-        if len(res) != 0:
-            message = 'This email has registered'
-
-        return message
-
-    def __validate_format(self, data:dict) -> dict:
-        check_username_result = self.__validate_username(data['username'])
-        check_email_result = self.__validate_email(data['email'])
-        check_password_result = self.__validate_password(data['password'])
-        check_confirm_password_result = self.__validate_confirm_password(data['password'], data['confirmPassword'])
-        message = check_username_result + check_email_result + check_password_result + check_confirm_password_result
-        status = "success" if message == [] else 'failed'
+    def signup(self, data):
+        is_exist = self.__is_exist(data)
+        is_format_correct = self.__validate_format(data)
+        message = is_exist + is_format_correct
+        status = 'success' if message == [] else 'failed'
         return {
             'status': status,
             'message': message
         }
 
+    def login(self, data):
+        is_exist = []
+        status = 'success' if is_exist == [] else 'failed'
+        return {
+            "status": status
+        }
+
+
+    def __is_exist(self, data) -> list:
+        message = []
+
+        res = self.collection.find({'username': data['username']})
+        res = [{item: data[item] for item in data if item != '_id'} for data in res]
+        if len(res) != 0:
+            message.append('This username has been used')
+
+        res = self.collection.find({'email': data['email']})
+        res = [{item: data[item] for item in data if item != '_id'} for data in res]
+        if len(res) != 0:
+            message.append("This email has registered")
+        return message
+
+    def __validate_format(self, data:dict) -> list:
+        check_username_result = self.__validate_username(data['username'])
+        check_email_result = self.__validate_email(data['email'])
+        check_password_result = self.__validate_password(data['password'])
+        check_confirm_password_result = self.__validate_confirm_password(data['password'], data['confirmPassword'])
+        message = check_username_result + check_email_result + check_password_result + check_confirm_password_result
+        return message
+
     def __validate_username(self, username: str) -> list:
         message = []
         if len(username) < 6:
             message.append('length of username needs to bigger than 6')
-        elif re.search(r"\W", username) is not None:
+        if re.search(r"\W", username) is not None:
             message.append('username cant use symbol')
         return message
 

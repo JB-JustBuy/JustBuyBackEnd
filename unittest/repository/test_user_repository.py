@@ -20,14 +20,31 @@ class TestUserRepository(unittest.TestCase):
     def tearDown(self):
         self.user_rp.delete(data={'query':self.data})
 
-    def test_exist_in_repositeory(self):
+    def test_add_user(self):
+        user1 = self.data
+        res = self.user_rp.add_user(user1)
+        self.assertEqual('failed', res['status'])
+        self.assertEqual(2, len(res['message']))
+
+
+        user2 = {
+            'username': 'testusername002',
+            'email': 'testusername002@gmail.com',
+            'password': 'sae22v777',
+            'confirmPassword': 'sae22v777'
+        }
+        res = self.user_rp.add_user(user2)
+        self.assertEqual('success', res['status'])
+        self.assertEqual([], res['message'])
+
+    def test_exist_in_repository(self):
         data = {
             "username": 'testusername001',
             'email': 'testuseranme002@gmail.com',
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        self.assertEqual('This username has been used', self.user_rp._UserRepository__is_exist(data))
+        self.assertEqual('This username has been used', self.user_rp._UserRepository__is_exist(data)[0])
 
         data = {
             "username": 'testusername002',
@@ -35,7 +52,15 @@ class TestUserRepository(unittest.TestCase):
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        self.assertEqual('This email has registered', self.user_rp._UserRepository__is_exist(data))
+        self.assertEqual('This email has registered', self.user_rp._UserRepository__is_exist(data)[0])
+
+        data = {
+            "username": 'correct001',
+            'email': 'correct001@gmail.com',
+            'password': "correct001password",
+            'confirmPassword': 'correct001password'
+        }
+        self.assertTrue(self.user_rp._UserRepository__is_exist(data) == [])
 
     def test_validate_format(self):
         data = {
@@ -44,8 +69,8 @@ class TestUserRepository(unittest.TestCase):
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        res = self.user_rp.validate_format(data)
-        self.assertEqual("success", res['status'])
+        res = self.user_rp._UserRepository__validate_format(data)
+        self.assertEqual([], res)
 
     def test_validate_username(self):
         username = 't1'
