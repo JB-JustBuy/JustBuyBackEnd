@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
 from src.repository.user_respository import UserRepository
-
+from src.entities.user.user import User
 
 class SignUpController(Resource):
     def __init__(self, **kwargs):
@@ -23,17 +23,24 @@ class SignUpController(Resource):
         arg = parser.parse_args()
         data = {
             "document": {
-                "account": arg["username"],
+                "username": arg["username"],
                 "email": arg['email'],
                 "password": arg["password"],
                 'confirmPassword': arg['confirmPassword']
             }
         }
-        response = self.rp.signup(data)
+
+        is_exist = self.is_exist(data)
+        is_format_correct = User.validate_format(data)
+        message = is_exist + is_format_correct
+        status = 'success' if message == [] else 'failed'
 
         return {
             "message": "success",
-            "res": response
+            "res": {
+                'status': status,
+                'message': message
+            }
         }, 200
 
 

@@ -20,9 +20,14 @@ class TestUserRepository(unittest.TestCase):
     def tearDown(self):
         self.user_rp.delete(data={'query':self.data})
 
+
+    def test_get_users(self):
+        users = self.user_rp.get_users()
+        print(users)
+
     def test_add_user(self):
         user1 = self.data
-        res = self.user_rp.add_user(user1)
+        res = self.user_rp.signup(user1)
         self.assertEqual('failed', res['status'])
         self.assertEqual(2, len(res['message']))
 
@@ -33,7 +38,7 @@ class TestUserRepository(unittest.TestCase):
             'password': 'sae22v777',
             'confirmPassword': 'sae22v777'
         }
-        res = self.user_rp.add_user(user2)
+        res = self.user_rp.signup(user2)
         self.assertEqual('success', res['status'])
         self.assertEqual([], res['message'])
 
@@ -44,7 +49,7 @@ class TestUserRepository(unittest.TestCase):
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        self.assertEqual('This username has been used', self.user_rp._UserRepository__is_exist(data)[0])
+        self.assertEqual('This username has been used', self.user_rp.is_exist(data)[0])
 
         data = {
             "username": 'testusername002',
@@ -52,7 +57,7 @@ class TestUserRepository(unittest.TestCase):
             'password': "testpassword001",
             'confirmPassword': 'testpassword001'
         }
-        self.assertEqual('This email has registered', self.user_rp._UserRepository__is_exist(data)[0])
+        self.assertEqual('This email has registered', self.user_rp.is_exist(data)[0])
 
         data = {
             "username": 'correct001',
@@ -60,56 +65,5 @@ class TestUserRepository(unittest.TestCase):
             'password': "correct001password",
             'confirmPassword': 'correct001password'
         }
-        self.assertTrue(self.user_rp._UserRepository__is_exist(data) == [])
+        self.assertTrue(self.user_rp.is_exist(data) == [])
 
-    def test_validate_format(self):
-        data = {
-            "username": 'testusername001',
-            'email': 'testusername001@gmail.com',
-            'password': "testpassword001",
-            'confirmPassword': 'testpassword001'
-        }
-        res = self.user_rp._UserRepository__validate_format(data)
-        self.assertEqual([], res)
-
-    def test_validate_username(self):
-        username = 't1'
-        self.assertEqual("length of username needs to bigger than 6", self.user_rp._UserRepository__validate_username(username)[0])
-
-        username = '%3tsete1'
-        self.assertEqual("username cant use symbol", self.user_rp._UserRepository__validate_username(username)[0])
-
-        username = "%1"
-        res = self.user_rp._UserRepository__validate_username(username)
-        self.assertTrue("username cant use symbol" in res)
-        self.assertTrue('length of username needs to bigger than 6' in res)
-        #
-        username = 'testuser001'
-        print(self.user_rp._UserRepository__validate_username(username))
-        self.assertTrue(self.user_rp._UserRepository__validate_username(username) == [])
-
-    def test_validate_email(self):
-        email = "0001"
-        self.assertEqual("email format error", self.user_rp._UserRepository__validate_email(email)[0])
-
-        email = "0222.com.tw"
-        self.assertEqual("email format error", self.user_rp._UserRepository__validate_email(email)[0])
-
-        email = '001@gmail.com'
-        self.assertTrue(self.user_rp._UserRepository__validate_email(email) == [])
-
-    def test_validate_password(self):
-        password = '100'
-        self.assertEqual("length of password needs to bigger than 8", self.user_rp._UserRepository__validate_password(password)[0])
-
-        password = '3r232rafax'
-        self.assertTrue(self.user_rp._UserRepository__validate_password(password) == [])
-
-    def test_validate_confirm_password(self):
-        password = "000"
-        confirm_password = '111'
-        self.assertEqual("password and confirm password arent the same",
-                        self.user_rp._UserRepository__validate_confirm_password(password, confirm_password)[0])
-
-        confirm_password = '000'
-        self.assertTrue(self.user_rp._UserRepository__validate_confirm_password(password, confirm_password) == [])

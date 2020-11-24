@@ -2,13 +2,13 @@ from pymongo import MongoClient
 
 
 class Repository:
-    def __init__(self, data):
+    def __init__(self, config):
         self.client = MongoClient("mongodb://localhost:27017/")
-        database = data["database"]
-        collection = data['collection']
+        database = config["database"]
+        collection = config['collection']
         cursor = self.client[database]
         self.collection = cursor[collection]
-        self.data = data
+        self.config = config
         # self.client = None
         # self.cursor =  None
         # self.collection = None
