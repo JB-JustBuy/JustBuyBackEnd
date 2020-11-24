@@ -2,17 +2,11 @@ from flask_restful import Resource, reqparse
 from src.repository.user_respository import UserRepository
 from src.entities.user.user import User
 
+
 class SignUpController(Resource):
     def __init__(self, **kwargs):
         self.rp_config = kwargs["repository"]
         self.rp = UserRepository(self.rp_config)
-
-    def get(self):
-        response = self.rp.read()
-        return {
-            "message": "success",
-            "response": response
-        }, 200
 
     def post(self,):
         parser = reqparse.RequestParser()
@@ -33,14 +27,9 @@ class SignUpController(Resource):
         is_exist = self.is_exist(data)
         is_format_correct = User.validate_format(data)
         message = is_exist + is_format_correct
-        status = 'success' if message == [] else 'failed'
-
+        message = "success" if message == [] else message
         return {
-            "message": "success",
-            "res": {
-                'status': status,
-                'message': message
-            }
+            "message": message
         }, 200
 
 

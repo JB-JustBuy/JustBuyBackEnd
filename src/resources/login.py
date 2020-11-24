@@ -21,16 +21,13 @@ class Login(Resource):
         }
 
         users = self.rp.get_users()
-        status = 'bad login'
+        message = 'bad login'
         if data['email'] in [user['email'] for user in users]:
             user = User()
             user.id = data['email']
             login_user(user)
-            status = 'success'
+            message = 'success'
 
         return {
-            "message": 'success',
-            "res": {
-                "status": status
-            }
+            "message": message,
         }, 200

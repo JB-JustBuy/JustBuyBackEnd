@@ -23,24 +23,7 @@ class TestUserRepository(unittest.TestCase):
 
     def test_get_users(self):
         users = self.user_rp.get_users()
-        print(users)
-
-    def test_add_user(self):
-        user1 = self.data
-        res = self.user_rp.signup(user1)
-        self.assertEqual('failed', res['status'])
-        self.assertEqual(2, len(res['message']))
-
-
-        user2 = {
-            'username': 'testusername002',
-            'email': 'testusername002@gmail.com',
-            'password': 'sae22v777',
-            'confirmPassword': 'sae22v777'
-        }
-        res = self.user_rp.signup(user2)
-        self.assertEqual('success', res['status'])
-        self.assertEqual([], res['message'])
+        self.assertTrue(users)
 
     def test_exist_in_repository(self):
         data = {
