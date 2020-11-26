@@ -1,33 +1,32 @@
+from flask import make_response, jsonify, session
 from flask_restful import Resource, reqparse
-from flask_login import logout_user, login_user
 from src.repository.user_respository import UserRepository
-from src.entities.user.user import User
 
 
-class Login(Resource):
-    def __init__(self, **kwargs):
-        self.rp_config = kwargs["repository"]
-        self.rp = UserRepository(self.rp_config)
-
+class LoginController(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("email", required=True, help='account is required')
         parser.add_argument("password", required=True, help='password is required')
         arg = parser.parse_args()
-        print('arg', arg)
         data = {
             'email': arg['email'],
             'password': arg['password']
         }
-
-        users = self.rp.get_users()
+        users = UserRepository.get_users()
         message = 'bad login'
-        if data['email'] in [user['email'] for user in users]:
-            user = User()
-            user.id = data['email']
-            login_user(user)
+        emails = [user.email for user in users]
+        print("data['email'] ", data['email'])
+        print("emails", emails)
+        if data['email'] in emails:
             message = 'success'
 
-        return {
+        res = {
             "message": message,
-        }, 200
+        }
+        return make_response(jsonify(res), 200)
+
+    def get(self):
+        session['key'] = 'test'
+        res = {'message': 'ok'}
+        return make_response(jsonify(res), 200)

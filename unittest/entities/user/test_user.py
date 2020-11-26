@@ -1,5 +1,5 @@
 import unittest
-from src.entities.user.user import User
+from src.model.user import User
 
 
 class TestUser(unittest.TestCase):
