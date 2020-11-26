@@ -1,4 +1,5 @@
 from .db import db
+from flask import session
 from flask_bcrypt import generate_password_hash, check_password_hash
 import re
 
@@ -6,19 +7,34 @@ import re
 class UserRepository(db.Document):
     username = db.StringField(require=True)
     email = db.StringField(required=True, unique=True)
-    password = db.StringField(required=True)
+    password = db.StringField(required=True, min_length=6)
 
     def hash_password(self):
         self.password = generate_password_hash(self.password).decode('utf-8')
 
-    def check_password_hash(self, password):
+    def verify_password(self, password):
         return check_password_hash(self.password, password)
 
-    def check_confirm_password(self, confirm_password):
-        if self.password != confirm_password:
+    @staticmethod
+    def check_confirm_password(password, confirm_password):
+        if password != confirm_password:
             raise Exception("confirmPassword and password are not the same")
         else:
             return
+
+    def save_session(self):
+        session['id'] = str(self.id)
+
+    @classmethod
+    def get_user(cls, email):
+        return UserRepository.objects.get(email=email)
+
+    @staticmethod
+    def remove_session():
+        session['username'] = ''
+        session['email'] = ''
+
+
     @staticmethod
     def get_users() -> list:
         users = UserRepository.objects()

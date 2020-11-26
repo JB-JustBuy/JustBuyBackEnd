@@ -3,10 +3,9 @@ from flask_restful import Api
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from src.repository.db import initialize_db
-from src.resources.sign_up import SignUpController
 from src.resources.search_merchandise_controller import SearchMerchandiseController
-from src.resources.login_controller import LoginController
-from src.resources.user_controller import UserController
+from src.resources.auth import init_auth
+
 
 class DevConfig(object):
     DEBUG = True
@@ -32,12 +31,12 @@ def index():
     data = request.json
     return data if data != None else {"status": "error"}
 
+# @app.route('/normal_member')
+# @check_login('normal')
+# def member_normal_page():
+#     return 'ok'
 
 api.add_resource(SearchMerchandiseController, "/search")
-api.add_resource(UserController, '/api/user')
-api.add_resource(LoginController, '/api/auth/login')
-api.add_resource(SignUpController, '/api/auth/signup')
-
-
+init_auth(api)
 if __name__ == "__main__":
     app.run()
