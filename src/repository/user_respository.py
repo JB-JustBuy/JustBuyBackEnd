@@ -15,8 +15,10 @@ class UserRepository(db.Document):
         return check_password_hash(self.password, password)
 
     def check_confirm_password(self, confirm_password):
-        raise Exception("confirmPassword and password are not the same")
-
+        if self.password != confirm_password:
+            raise Exception("confirmPassword and password are not the same")
+        else:
+            return
     @staticmethod
     def get_users() -> list:
         users = UserRepository.objects()
