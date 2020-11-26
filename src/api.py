@@ -34,9 +34,9 @@ def index():
 
 
 api.add_resource(SearchMerchandiseController, "/search")
-api.add_resource(UserController, '/user')
-api.add_resource(LoginController, '/login')
-api.add_resource(SignUpController, '/signup')
+api.add_resource(UserController, '/api/user')
+api.add_resource(LoginController, '/api/auth/login')
+api.add_resource(SignUpController, '/api/auth/signup')
 
 
 if __name__ == "__main__":
