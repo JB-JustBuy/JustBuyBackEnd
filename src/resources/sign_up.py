@@ -18,17 +18,23 @@ class SignUpController(Resource):
             'confirmPassword': arg['confirmPassword']
         }
 
-        is_format_correct = UserRepository.validate_format(data)
-        if is_format_correct == []:
-            UserRepository(username=data['username'],
+
+        try:
+            user = UserRepository(username=data['username'],
                             email=data['email'],
-                            password=data['password']).save()
+                            password=data['password'])
+            user.check_confirm_password(data['confirmPassword'])
+            user.hash_password()
+            user.save()
+            id = str(user.id)
             message = "success"
-        else:
-            message = is_format_correct
+        except Exception as e:
+            message = e.args[0]
+            id = None
 
         return make_response({
-            "message": message
+            "message": message,
+            "id": id
             }, 200)
 
 

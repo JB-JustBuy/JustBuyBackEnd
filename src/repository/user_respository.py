@@ -1,4 +1,5 @@
 from .db import db
+from flask_bcrypt import generate_password_hash, check_password_hash
 import re
 
 
@@ -6,6 +7,15 @@ class UserRepository(db.Document):
     username = db.StringField(require=True)
     email = db.StringField(required=True, unique=True)
     password = db.StringField(required=True)
+
+    def hash_password(self):
+        self.password = generate_password_hash(self.password).decode('utf-8')
+
+    def check_password_hash(self, password):
+        return check_password_hash(self.password, password)
+
+    def check_confirm_password(self, confirm_password):
+        raise Exception("confirmPassword and password are not the same")
 
     @staticmethod
     def get_users() -> list:
