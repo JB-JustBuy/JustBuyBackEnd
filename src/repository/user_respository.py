@@ -24,6 +24,8 @@ class UserRepository(db.Document):
 
     def save_session(self):
         session['id'] = str(self.id)
+        session['username'] = self.username
+        session['email'] = self.email
 
     @classmethod
     def get_user(cls, email):
@@ -31,6 +33,7 @@ class UserRepository(db.Document):
 
     @staticmethod
     def remove_session():
+        session['id'] = ""
         session['username'] = ''
         session['email'] = ''
 

@@ -1,4 +1,5 @@
-from flask_restful import Resource, reqparse
+from flask import session, jsonify, make_response
+from flask_restful import Resource, reqparse, abort
 from src.repository.user_respository import UserRepository
 from src.utilies.abort_msg import abort_msg
 
@@ -30,6 +31,15 @@ class SignupApi(Resource):
 
 
 class LoginApi(Resource):
+    def get(self):
+        id = session.get("id")
+        username = session.get('username')
+        email = session.get('email')
+        return make_response(jsonify(id=id,
+                                     username=username,
+                                     email=email), 200)
+
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("email", required=True, help='account is required')
@@ -51,6 +61,20 @@ class LogoutApi(Resource):
     def post(self):
         UserRepository.remove_session()
 
+
+def login_required():
+    def decorator(func):
+        def wrap(*args, **kw):
+            user_id = session.get('id')
+            if user_id == None or user_id == '':
+                return abort(401)
+            else:
+                return func(*args, **kw)
+
+        wrap.__name__ = func.__name__
+        return wrap
+
+    return decorator
 
 def init_auth(api):
     api.add_resource(SignupApi, '/api/auth/signup')
