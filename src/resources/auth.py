@@ -18,6 +18,7 @@ class SignupApi(Resource):
                             password=data['password'])
             print('data', data)
             user.check_confirm_password(data['password'], data['confirmPassword'])
+            user.validate_email(data['email'])
             user.hash_password()
             user.save()
             user.save_session()

@@ -35,11 +35,6 @@ def index():
     data = request.json
     return data if data != None else {"status": "error"}
 
-# @app.route('/normal_member')
-# @check_login('normal')
-# def member_normal_page():
-#     return 'ok'
-
 api.add_resource(SearchMerchandiseController, "/api/search")
 init_auth(api)
 init_user(api)

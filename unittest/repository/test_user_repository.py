@@ -3,50 +3,16 @@ import unittest
 
 
 class TestUserRepository(unittest.TestCase):
-    def setUp(self):
-        self.user_rp = UserRepository({
-            "database": 'just_buy',
-            'collection': 'users'
-        })
+    def test_validate_email(self):
+        email = "efaina"
+        try:
+            UserRepository.validate_email(email)
+        except ValueError as e:
+            self.assertEqual("email format error", e.args[0])
 
-        self.data = {
-            "username": 'testusername001',
-            'email': 'testusername001@gmail.com',
-            'password': "testpassword001",
-            'confirmPassword': 'testpassword001'
-        }
-        self.user_rp.write(data={"document": self.data})
-
-    def tearDown(self):
-        self.user_rp.delete(data={'query':self.data})
-
-
-    def test_get_users(self):
-        users = self.user_rp.get_users()
-        self.assertTrue(users)
-
-    def test_exist_in_repository(self):
-        data = {
-            "username": 'testusername001',
-            'email': 'testuseranme002@gmail.com',
-            'password': "testpassword001",
-            'confirmPassword': 'testpassword001'
-        }
-        self.assertEqual('This username has been used', self.user_rp.is_exist(data)[0])
-
-        data = {
-            "username": 'testusername002',
-            'email': 'testusername001@gmail.com',
-            'password': "testpassword001",
-            'confirmPassword': 'testpassword001'
-        }
-        self.assertEqual('This email has registered', self.user_rp.is_exist(data)[0])
-
-        data = {
-            "username": 'correct001',
-            'email': 'correct001@gmail.com',
-            'password': "correct001password",
-            'confirmPassword': 'correct001password'
-        }
-        self.assertTrue(self.user_rp.is_exist(data) == [])
-
+    def test_validate_password(self):
+        password = "tset"
+        try:
+            UserRepository.validate_password(password)
+        except ValueError as e:
+            self.assertEqual("length of password needs to bigger than 8", e.args[0])
