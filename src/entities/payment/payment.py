@@ -9,24 +9,31 @@ class Payment(metaclass=abc.ABCMeta):
         self.name = None
         self.type = None
 
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'type': self.type,
+            'methods': [method.to_dict() for method in self.methods]
+        }
+
     def add_method(self, method):
         if isinstance(method, FeedBackMethod):
             self.methods.append(method)
         else:
             raise TypeError("Paras: 'method' is not FeedBackMethod!")
 
-    def get_best_method(self, methods):
+    def get_best_feedback_method(self, methods):
         feedback = [method.feedback() for method in methods]
         print(" feedback:", feedback)
         idx = np.argmax(feedback)
         print(" index:", idx)
         return methods[idx]
 
-    def get_qualified_best_method(self, merchandises, methods):
-        print("Methods:", methods)
+    def get_qualified_best_method(self, merchandises):
+        print("Methods:", self.methods)
         qualified_methods = []
-        for method in methods:
+        for method in self.methods:
             if method.qualify(merchandises):
                 qualified_methods.append(method)
-        print("Qualified Methods:", methods)
-        return self.get_best_method(qualified_methods)
+        print("Qualified Methods:", qualified_methods)
+        return self.get_best_feedback_method(qualified_methods)

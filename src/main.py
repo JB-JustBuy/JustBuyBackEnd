@@ -5,33 +5,7 @@ from src.entities.feedback_method.feedback_method import FeedBackMethod
 from src.entities.feedback_constraint.single_full import SingleFull
 from src.entities.feedback_form.cash import Cash
 from src.entities.payment.credit_card import CreditCard
-keyword = input("Please input the product name and mode:")
 
-pchome = PChomeDataController()
-pchome.search(keyword)
-pchome_products = pchome.products
-
-shoppe = ShoppeDataController()
-shoppe.search(keyword)
-shoppe_products = shoppe.products
-
-merchandises = Merchandise.generate_merchandises(shoppe_products)
-shoppe_merchandise = Merchandise.find_the_cheapest(merchandises)
-print("The cheapest merchandise(pick from shoppe):\n  name:{}\n   price:{}\n  platform:{}\n url:{}".format(
-    shoppe_merchandise.name,
-    shoppe_merchandise.price,
-    shoppe_merchandise.platform,
-    shoppe_merchandise.url
-))
-
-merchandises = Merchandise.generate_merchandises(pchome_products)
-pchome_merchandise = Merchandise.find_the_cheapest(merchandises)
-print("The cheapest merchandise(pick from pchome):\n  name:{}\n   price:{}\n  platform:{}\n url:{}".format(
-    pchome_merchandise.name,
-    pchome_merchandise.price,
-    pchome_merchandise.platform,
-    pchome_merchandise.url
-))
 
 
 form1 = Cash(amount=100)

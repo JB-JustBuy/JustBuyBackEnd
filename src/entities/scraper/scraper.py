@@ -1,6 +1,7 @@
 from selenium import webdriver
 import abc, time
 from selenium.webdriver import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 
@@ -20,11 +21,12 @@ class Scraper(metaclass=abc.ABCMeta):
             self.parser()
             products = self.parser()
             self.result[search_key] = products
+        self.save_log()
         self.driver.quit()
 
     def get_driver(self):
         options = self.get_chrome_options()
-        driver = webdriver.Chrome(executable_path=self.driver_path, options=options)
+        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         return driver
 
     def get_chrome_options(self):
@@ -41,6 +43,11 @@ class Scraper(metaclass=abc.ABCMeta):
     def hover(self, element):
         ActionChains(self.driver).move_to_element(element).perform()
 
+    def save_log(self):
+        import json, os
+        with open(os.path.join("..", __name__+"txt"), 'w') as f:
+            data = json.dumps(self.result, indent=1)
+            f.write(data)
 
     @abc.abstractmethod
     def parser(self):

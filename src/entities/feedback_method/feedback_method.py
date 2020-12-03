@@ -6,6 +6,12 @@ class FeedBackMethod(object):
         self.constraint = constraint
         self.form = form
 
+    def to_dict(self):
+        return {
+            "constraint": self.constraint.to_dict(),
+            "form": self.form.to_dict()
+        }
+
     def trigger(self, merchandises):
         if self.qualify(merchandises):
             print("constraint is single full and constraint is satisfied")
@@ -16,7 +22,6 @@ class FeedBackMethod(object):
     def qualify(self, merchandises):
         return self.constraint.qualify(merchandises)
 
-    #***
     def feedback(self, merchandises=None):
         if isinstance(self.constraint, SingleFull):
             price = self.constraint.amount

@@ -10,3 +10,10 @@ class FeedBackForm(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def feedback(self, price=None):
         pass
+
+    def to_dict(self):
+        return {
+            'amount': self.amount,
+            'pct': self.pct,
+            'md': self.md
+        }

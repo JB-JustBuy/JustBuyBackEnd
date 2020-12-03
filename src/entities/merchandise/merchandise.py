@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Merchandise(object):
     def __init__(self, name, price, platform, url, md_type=None, quantity=1):
         self.name = name
@@ -12,20 +13,38 @@ class Merchandise(object):
         else:
             raise Exception("Merchandise Quantity need to bigger than 0.")
 
-    @staticmethod
-    def generate_merchandises(products):
-        merchandises = []
-        for product in products:
-            name = product["name"]
-            price = product['price']
-            platform = product['platform']
-            url = product['url']
-            md_type = None
-            if "type" in product.keys():
-                md_type = product[md_type]
-            merchandises.append(Merchandise(name, price, platform, url, md_type))
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "price": self.price,
+            "platform": self.platform,
+            'url': self.url,
+            "md_type": self.md_type
+        }
 
     @staticmethod
-    def find_the_cheapest(merchandises):
-        cheapest_idx = np.argmin([merchandise.price for merchandise in merchandises])
-        return merchandises[cheapest_idx]
+    def generate_merchandises(scrape_result: dict) -> dict:
+        merchandises = []
+        products = {}
+        for product_name, search_result in scrape_result.items():
+            for item in search_result:
+                print(item)
+                name = item["name"]
+                price = item['price']
+                platform = item['platform']
+                url = item['url']
+                md_type = None
+                if "type" in item.keys():
+                    md_type = item[md_type]
+                merchandises.append(Merchandise(name, price, platform, url, md_type))
+            products[product_name] = merchandises
+            merchandises = []
+        return products
+
+    @staticmethod
+    def find_the_cheapest(merchandises: dict) -> dict:
+        result = {}
+        for name, items in merchandises.items():
+            cheapest_idx = np.argmin([int(item.price) for item in items])
+            result[name] = items[cheapest_idx]
+        return result
