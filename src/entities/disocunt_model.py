@@ -35,8 +35,8 @@ class DiscountModel:
     def handle_select_merchandise_strategy(self, merchandises):
         selected = {}
         for name, searched_merchandises in merchandises.items():
-            selected[name] =  self.select_merchandise_strategy.find_ideal(searched_merchandises)
-        return select_merchdise_strategy
+            selected[name] = self.select_merchandise_strategy.find_ideal(searched_merchandises)
+        return selected
 
     def process_one_platform_search_result(self, platform: str):
         merchandises = self.__get_merchandise_from_scrapy_model(platform)
