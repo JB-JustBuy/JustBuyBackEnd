@@ -1,16 +1,11 @@
-from src.entities.scraper.scraper import Scraper
+from src.entities.scrapy.scrapy import Scrapy
 import os
 
 
-class PChomeDataController(Scraper):
+class PChomeScrapy(Scrapy):
     def __init__(self, driver_path=None):
         super().__init__()
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
-        self.save_path = os.path.abspath(os.path.join("../../..", "..", "data"))
-        if driver_path is None:
-            self.driver_path = os.path.abspath(os.path.join(__file__, '../../../../chromedriver'))
-        else:
-            self.driver_path = driver_path
         self.driver = self.get_driver()
         self.platform = "pchome"
 
@@ -47,6 +42,6 @@ class PChomeDataController(Scraper):
 
 if __name__ == '__main__':
     print(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-    dc = PChomeDataController()
+    dc = PChomeScrapy()
     dc.search(['羅技G604'])
     print(dc.result)

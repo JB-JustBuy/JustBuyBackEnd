@@ -1,17 +1,11 @@
-from src.entities.scraper.scraper import Scraper
+from src.entities.scrapy.scrapy import Scrapy
 import os
 
 
-class ShoppeDataController(Scraper):
+class ShoppeScrapy(Scrapy):
     def __init__(self, driver_path=None):
         super().__init__()
         self.url = "https://shopee.tw/search?keyword="
-        self.save_path = os.path.abspath(os.path.join("../../..", "..", "data"))
-        if driver_path is None:
-            self.driver_path = os.path.abspath(os.path.join(__file__, '../../../../chromedriver'))
-            print("driver path:", self.driver_path)
-        else:
-            self.driver_path = driver_path
         self.driver = self.get_driver()
         self.platform = "shoppe"
 
@@ -42,6 +36,6 @@ class ShoppeDataController(Scraper):
 
 if __name__ == '__main__':
     import json
-    dc = ShoppeDataController()
+    dc = ShoppeScrapy()
     dc.search(['羅技G604'])
     print(json.dumps(dc.result, indent=1))

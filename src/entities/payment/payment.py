@@ -1,5 +1,5 @@
 from src.entities.feedback_method.feedback_method import FeedBackMethod
-import abc
+import abc, logging
 import numpy as np
 
 
@@ -24,16 +24,26 @@ class Payment(metaclass=abc.ABCMeta):
 
     def get_best_feedback_method(self, methods):
         feedback = [method.feedback() for method in methods]
-        print(" feedback:", feedback)
         idx = np.argmax(feedback)
-        print(" index:", idx)
         return methods[idx]
 
     def get_qualified_best_method(self, merchandises):
-        print("Methods:", self.methods)
         qualified_methods = []
         for method in self.methods:
             if method.qualify(merchandises):
                 qualified_methods.append(method)
-        print("Qualified Methods:", qualified_methods)
+
         return self.get_best_feedback_method(qualified_methods)
+
+    def log(self, merchandises, qualified_methods):
+        log = ""
+        for merchandise in merchandises:
+            log += merchandise.name
+        logging.info("Merchandises, included {}".format(log), end='')
+
+        if qualified_methods != []:
+            logging('qualified methods have:')
+            for method in qualified_methods:
+                logging(method.to_dict())
+        else:
+            logging('cant find qualified methods')

@@ -22,8 +22,8 @@ class TestFeedBackMethod(unittest.TestCase):
         self.assertEqual(100, self.method.trigger(merchandises))
 
     def test_integration(self):
-        from src.entities.scraper.pchome_data_controller import PChomeDataController
-        from src.entities.scraper.shoppe_data_controller import ShoppeDataController
+        from src.entities.scrapy.pchome_scrapy import PChomeScrapy
+        from src.entities.scrapy.shoppe_scrapy import ShoppeScrapy
         from src.entities.merchandise.merchandise import Merchandise
         from src.entities.feedback_method.feedback_method import FeedBackMethod
         from src.entities.feedback_constraint.single_full import SingleFull
@@ -31,11 +31,11 @@ class TestFeedBackMethod(unittest.TestCase):
 
         keyword = input("Please input the product name and mode:")
 
-        pchome = PChomeDataController()
+        pchome = PChomeScrapy()
         pchome.search(keyword)
         pchome_products = pchome.products
 
-        shoppe = ShoppeDataController()
+        shoppe = ShoppeScrapy()
         shoppe.search(keyword)
         shoppe_products = shoppe.products
 

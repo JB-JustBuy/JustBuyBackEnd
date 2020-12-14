@@ -23,7 +23,7 @@ class Merchandise(object):
         }
 
     @staticmethod
-    def generate_merchandises(scrape_result: dict) -> dict:
+    def from_dict(scrape_result: dict) -> dict:
         merchandises = []
         products = {}
         for product_name, search_result in scrape_result.items():

@@ -21,7 +21,7 @@ config = {
         'type': 'CreditCard',
         'belong': '玉山',
         'methods': [
-            {"constraint": {"type": "單筆", "value": "500", 'platform': 'PCHOME'},
+            {"constraint": {"type": "單筆", "value": "500", 'platform': 'pchome'},
              'feedback': {"type": "現金", "value": "100"}
              },
         ]
@@ -30,7 +30,7 @@ config = {
         'type': 'CreditCard',
         'belong': '玉山',
         'methods': [
-            {"constraint": {"type": "單筆", "value": "500", 'platform': 'PCHOME'},
+            {"constraint": {"type": "單筆", "value": "500", 'platform': 'pchome'},
              'feedback': {"type": "現金", "value": "200"}
              },
         ]
