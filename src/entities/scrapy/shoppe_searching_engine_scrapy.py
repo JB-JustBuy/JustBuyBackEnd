@@ -1,15 +1,15 @@
-from src.entities.scrapy.scrapy import Scrapy
+from src.entities.scrapy.search_engine_scrapy import SearchEngineScrapy
 import os
 
 
-class ShoppeScrapy(Scrapy):
+class ShoppeSearchingEngineScrapy(SearchEngineScrapy):
     def __init__(self, driver_path=None):
         super().__init__()
         self.url = "https://shopee.tw/search?keyword="
         self.driver = self.get_driver()
         self.platform = "shoppe"
 
-    def parser(self):
+    def parse(self):
         elem_row = self.driver.find_element_by_xpath("//div[@class='row shopee-search-item-result__items']")
         elem_names = elem_row.find_elements_by_xpath('//div[@class="_1NoI8_ _16BAGk"]')
         elem_ads = elem_row.find_elements_by_xpath('//div[@data-sqe="ad"]')
@@ -36,6 +36,6 @@ class ShoppeScrapy(Scrapy):
 
 if __name__ == '__main__':
     import json
-    dc = ShoppeScrapy()
+    dc = ShoppeSearchingEngineScrapy()
     dc.search(['羅技G604'])
     print(json.dumps(dc.result, indent=1))

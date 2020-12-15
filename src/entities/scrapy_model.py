@@ -1,6 +1,6 @@
-from src.entities.scrapy.scrapy import Scrapy
-from src.entities.scrapy.pchome_scrapy import PChomeScrapy
-from src.entities.scrapy.shoppe_scrapy import ShoppeScrapy
+from src.entities.scrapy.search_engine_scrapy import SearchEngineScrapy
+from src.entities.scrapy.pchome_searching_engine_scrapy import PChomeSearchingEngineScrapy
+from src.entities.scrapy.shoppe_searching_engine_scrapy import ShoppeSearchingEngineScrapy
 
 
 class ScrapyModel:
@@ -24,10 +24,10 @@ class ScrapyModel:
         if name in self.__acception:
             self.__scrapies[name] = {}
             if name == 'shoppe':
-                self.__scrapies[name]['scrapy'] = ShoppeScrapy()
+                self.__scrapies[name]['scrapy'] = ShoppeSearchingEngineScrapy()
 
             elif name == 'pchome':
-                self.__scrapies[name]['scrapy'] = PChomeScrapy()
+                self.__scrapies[name]['scrapy'] = PChomeSearchingEngineScrapy()
         else:
             raise ValueError("scrapy model add_scrapy:: name is not validate'")
 

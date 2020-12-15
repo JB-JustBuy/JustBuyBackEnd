@@ -1,15 +1,15 @@
-from src.entities.scrapy.scrapy import Scrapy
+from src.entities.scrapy.search_engine_scrapy import SearchEngineScrapy
 import os
 
 
-class PChomeScrapy(Scrapy):
-    def __init__(self, driver_path=None):
+class PChomeSearchingEngineScrapy(SearchEngineScrapy):
+    def __init__(self):
         super().__init__()
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
         self.driver = self.get_driver()
         self.platform = "pchome"
 
-    def parser(self):
+    def parse(self):
         elem_item_contain = self.driver.find_element_by_xpath('//div[@id="ItemContainer"]')
         elem_items = elem_item_contain.find_elements_by_tag_name('dl')
         products = []
@@ -42,6 +42,6 @@ class PChomeScrapy(Scrapy):
 
 if __name__ == '__main__':
     print(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-    dc = PChomeScrapy()
+    dc = PChomeSearchingEngineScrapy()
     dc.search(['羅技G604'])
     print(dc.result)

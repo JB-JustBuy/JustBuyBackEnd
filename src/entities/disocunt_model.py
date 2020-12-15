@@ -100,9 +100,5 @@ if __name__ == '__main__':
     # init model
     model = DiscountModel(scrapy_model, config)
     payment, feedback = model.process_one_platform_search_result(platform='pchome')
-    print(payment)
-    print(feedback)
-    # logging.info("shoppe best payment:")
-    # logging.info([payment.to_dict()] if payment is not None else payment)
-    # logging.info(feedback)
+
 
