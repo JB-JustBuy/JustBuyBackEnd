@@ -3,8 +3,8 @@ import abc, time, logging
 
 
 class SearchEngineScrapy(Scrapy):
-    def __init__(self,):
-        super().__init__()
+    def __init__(self, driver):
+        super().__init__(driver)
         self.url = None
         self.platform = None
         self.result = {}
@@ -17,7 +17,6 @@ class SearchEngineScrapy(Scrapy):
             self.parse()
             products = self.parse()
             self.result[search_key] = products
-        self.driver.quit()
         logging.info(__name__+' end search')
 
     @abc.abstractmethod

@@ -3,10 +3,9 @@ import os
 
 
 class ShoppeSearchingEngineScrapy(SearchEngineScrapy):
-    def __init__(self, driver_path=None):
-        super().__init__()
+    def __init__(self, driver):
+        super().__init__(driver)
         self.url = "https://shopee.tw/search?keyword="
-        self.driver = self.get_driver()
         self.platform = "shoppe"
 
     def parse(self):
@@ -37,5 +36,5 @@ class ShoppeSearchingEngineScrapy(SearchEngineScrapy):
 if __name__ == '__main__':
     import json
     dc = ShoppeSearchingEngineScrapy()
-    dc.search(['羅技G604'])
+    dc.search(['羅技G604', '水壺'])
     print(json.dumps(dc.result, indent=1))

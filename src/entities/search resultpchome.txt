@@ -1,0 +1,16 @@
+{
+ "\u7f85\u6280g604": [
+  {
+   "name": "\u7f85\u6280 G604 Lightspeed\u7121\u7dda\u96fb\u7af6\u6ed1\u9f20",
+   "price": 1880,
+   "url": "https://24h.pchome.com.tw/prod/DCAN8M-A900AOG5G",
+   "platform": "pchome"
+  },
+  {
+   "name": "logitech \u7f85\u6280 G604 LIGHTSPEED \u7121\u7dda \u904a\u6232\u6ed1\u9f20 \u96fb\u7af6\u6ed1\u9f20",
+   "price": 2990,
+   "url": "https://mall.pchome.com.tw/prod/QABE00-A900AHI0D",
+   "platform": "pchome"
+  }
+ ]
+}

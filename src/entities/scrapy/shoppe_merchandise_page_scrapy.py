@@ -1,12 +1,13 @@
-from src.entities.scrapy.searching_merchandise_page_scrapy import SearchingMerchandisePageScrapy
+from src.entities.scrapy.searching_merchandise_page_scrapy import MerchandisePageScrapy
 import time
 
 
-class ShoppeMerchandisePageScrapy(SearchingMerchandisePageScrapy):
-    def __init__(self):
-        super().__init__()
-        self.driver = self.get_driver()
+class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.driver = driver
         self.PLAT_FORM = 'shoppe'
+
 
     def parse(self, url):
         self.driver.get(url)
@@ -15,14 +16,14 @@ class ShoppeMerchandisePageScrapy(SearchingMerchandisePageScrapy):
         name = self._get_name()
         price = self._get_origin_price()
         sale_price = self._get_sale_price()
-        self.driver.quit()
-        return {
+        md = {
             'name': name,
             'price': price,
             'sale_price': sale_price,
             'platform': self.PLAT_FORM,
             'url': url
         }
+        return md
 
     def _get_name(self):
         NAME_ClASS = 'qaNIZv'
@@ -46,14 +47,13 @@ class ShoppeMerchandisePageScrapy(SearchingMerchandisePageScrapy):
             xpath = "//div[@class='{}']".format(ORIGIN_PRICE_CLASS)
             price_tag = self.driver.find_element_by_xpath(xpath)
             price = price_tag.get_attribute('innerHTML')
+            print('sale price:', price)
             return price
-        except Exception as e:
+        except Exception:
             return None
 
 
 if __name__ == '__main__':
-    url = 'https://shopee.tw/EDWIN-503%E5%9F%BA%E6%9C%AC%E4%BA%94%' \
-          'E8%A2%8B%E7%AA%84%E7%9B%B4%E7%AD%92%E7%89%9B%E4%BB%94%E8%A4%B2(%E5%8E%9F%E8%97%8D%E8%89%B2)' \
-          '-%E7%94%B7%E6%AC%BE-i.135828246.2283224945'
+    url = 'https://shopee.tw/%E3%80%90%E5%85%A8%E6%96%B0%E3%80%91-PS4-Slim-500GB-1TB-%E7%99%BD-%E9%BB%91-%E4%B8%BB%E6%A9%9F-%E5%8F%B0%E7%81%A3%E5%85%AC%E5%8F%B8%E8%B2%A8-CUH-2218A-%E5%8F%AF%E9%9D%A2%E4%BA%A4-Pro-%E9%AD%94%E7%89%A9%E7%8D%B5%E4%BA%BA-i.14159223.1326072367'
     smpc = ShoppeMerchandisePageScrapy()
-    smpc.search(url)
+    smpc.parse(url)

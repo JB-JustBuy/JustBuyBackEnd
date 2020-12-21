@@ -1,15 +1,23 @@
 from flask_login import login_required
-from flask_restful import Resource, request
+from flask_restful import Resource, request, reqparse
 from src.resources.auth import login_required
 from src.entities.scrapy.shoppe_searching_engine_scrapy import ShoppeSearchingEngineScrapy
 import json
 
 
 class SearchMerchandiseController(Resource):
-    @login_required()
+    @login_required
     def get(self):
         key_words = request.args.get("keyword").split(' ')
         scraper = ShoppeSearchingEngineScrapy()
         scraper.search(key_words)
         result = json.dumps(scraper.result, indent=1)
         return result,  200
+
+
+class SearchByUrlController(Resource):
+    @login_required
+    def post(self):
+        rp = reqparse.RequestParser()
+        rp.add_argument('urls', required=True, help='Urls is required')
+
