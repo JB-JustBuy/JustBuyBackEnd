@@ -8,10 +8,8 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
         self.driver = driver
         self.PLAT_FORM = 'shoppe'
 
-
     def parse(self, url):
         self.driver.get(url)
-        time.sleep(1)
 
         name = self._get_name()
         price = self._get_origin_price()
@@ -27,6 +25,7 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
 
     def _get_name(self):
         NAME_ClASS = 'qaNIZv'
+        self._wait(NAME_ClASS)
         xpath = "//div[@class='{}']".format(NAME_ClASS)
         name_div = self.driver.find_element_by_xpath(xpath)
         name = name_div.find_element_by_xpath('span').get_attribute('innerHTML')
@@ -35,6 +34,8 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
 
     def _get_origin_price(self):
         ORIGIN_PRICE_CLASS = '_3_ISdg'
+        self._wait(ORIGIN_PRICE_CLASS)
+
         xpath = "//div[@class='{}']".format(ORIGIN_PRICE_CLASS)
         price_tag = self.driver.find_element_by_xpath(xpath)
         price = price_tag.get_attribute('innerHTML')
@@ -43,8 +44,9 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
 
     def _get_sale_price(self):
         try:
-            ORIGIN_PRICE_CLASS = '_3n5NQx'
-            xpath = "//div[@class='{}']".format(ORIGIN_PRICE_CLASS)
+            SALE_PRICE_CLASS = '_3n5NQx'
+            self._wait(SALE_PRICE_CLASS)
+            xpath = "//div[@class='{}']".format(SALE_PRICE_CLASS)
             price_tag = self.driver.find_element_by_xpath(xpath)
             price = price_tag.get_attribute('innerHTML')
             print('sale price:', price)
@@ -54,6 +56,7 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
 
 
 if __name__ == '__main__':
+    driver = ShoppeMerchandisePageScrapy.get_driver()
     url = 'https://shopee.tw/%E3%80%90%E5%85%A8%E6%96%B0%E3%80%91-PS4-Slim-500GB-1TB-%E7%99%BD-%E9%BB%91-%E4%B8%BB%E6%A9%9F-%E5%8F%B0%E7%81%A3%E5%85%AC%E5%8F%B8%E8%B2%A8-CUH-2218A-%E5%8F%AF%E9%9D%A2%E4%BA%A4-Pro-%E9%AD%94%E7%89%A9%E7%8D%B5%E4%BA%BA-i.14159223.1326072367'
-    smpc = ShoppeMerchandisePageScrapy()
+    smpc = ShoppeMerchandisePageScrapy(driver)
     smpc.parse(url)

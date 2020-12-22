@@ -6,7 +6,6 @@ class PChomeSearchingEngineScrapy(SearchEngineScrapy):
     def __init__(self, driver):
         super().__init__(driver)
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
-        self.driver = self.get_driver()
         self.platform = "pchome"
 
     def parse(self):

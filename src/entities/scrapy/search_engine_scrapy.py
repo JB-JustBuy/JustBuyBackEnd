@@ -14,7 +14,6 @@ class SearchEngineScrapy(Scrapy):
         for search_key in search_keys:
             self.driver.get(self.url+search_key)
             time.sleep(3)
-            self.parse()
             products = self.parse()
             self.result[search_key] = products
         logging.info(__name__+' end search')

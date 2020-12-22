@@ -1,10 +1,11 @@
+from src.utilies.parser.price_parser import PriceParser
 import numpy as np
-
+import re
 
 class Merchandise(object):
     def __init__(self, name, price, platform, url, md_type=None, quantity=1):
         self.name = name
-        self.price = price
+        self.price = PriceParser.price_parser(price)
         self.platform = platform
         self.url = url
         self.md_type = md_type
@@ -22,8 +23,18 @@ class Merchandise(object):
             "md_type": self.md_type
         }
 
+
+
     @staticmethod
-    def from_dict(scrape_result: dict) -> dict:
+    def from_dict(md_dict: dict):
+        name = md_dict['name'] if 'name' in md_dict else None
+        price = md_dict['price'] if 'price' in md_dict else None
+        platform = md_dict['platform'] if 'platform' in md_dict else None
+        url = md_dict['url'] if 'url' in md_dict else None
+        return Merchandise(name, price, platform, url)
+
+    @staticmethod
+    def from_searching_engine_scrapy_result(scrape_result: dict) -> dict:
         merchandises = []
         products = {}
         for product_name, search_result in scrape_result.items():

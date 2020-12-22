@@ -42,8 +42,11 @@ class FamiliarFilterStrategy(FilterStrategyInterface):
     def filter(self, merchandises: list):
         confirmed_md = []
         for merchandise in merchandises:
+            print('find md price:{} and ref_md price:{}'.format(merchandise.price,
+                                                                self.ref_md.price))
             if self.__is_in_price_range(merchandise) and \
                 self.__is_same_platform(merchandise):
+
                 confirmed_md.append(merchandise)
         return confirmed_md
 

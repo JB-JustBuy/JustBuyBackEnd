@@ -13,7 +13,6 @@ class FilterStrategyGenerator:
                             0 <= kwargs['price_range'] <= 1 else 0.1
                 return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, price_range)
             else:
-                raise ValueError("Familiar Strategy require 'baisc_price' and 'percentage' two paras.")
-
+                return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, 0.1)
         else:
             raise ValueError("strategy_type is not acceptable")

@@ -23,7 +23,7 @@ class ScrapyModel:
 
         # 在所有平台搜尋相似產品
         self.search_products_in_platform_engine(keywords, 'all')
-        self.driver.quit()
+        self.driver.close()
 
 
     def get_merchandises_by_urls(self, urls):
@@ -35,7 +35,6 @@ class ScrapyModel:
     def get_merchandise_by_url(self, url: str):
         url_platform = UrlParser.recognize_platform(url)
         if url_platform in self.__scrapies.keys():
-            print('url_platform:', url_platform)
             return self.__scrapies[url_platform]['md_page_scrapy'].parse(url)
 
 
