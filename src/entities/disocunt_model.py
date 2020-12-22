@@ -130,12 +130,12 @@ if __name__ == '__main__':
     FORMAT = '%(asctime)s %(levelname)s: %(message)s'
     logging.basicConfig(level=logging.DEBUG, filename='myLog.log', filemode='w', format=FORMAT)
 
-    urls = ['https://shopee.tw/%E3%80%90%E5%85%A8%E6%96%B0%E3%80%91-PS4-Slim-500GB-1TB-%E7%99%BD-%E9%BB%91-%E4%B8%BB%E6%A9%9F-%E5%8F%B0%E7%81%A3%E5%85%AC%E5%8F%B8%E8%B2%A8-CUH-2218A-%E5%8F%AF%E9%9D%A2%E4%BA%A4-Pro-%E9%AD%94%E7%89%A9%E7%8D%B5%E4%BA%BA-i.14159223.1326072367']
-
+    urls = ["https://24h.pchome.com.tw/prod/DGBJA7-1900B1QBE",
+            'https://24h.pchome.com.tw/prod/DYAN3U-A900B1KWU']
     scrapy_model = ScrapyModel.generate_scrapy_model(platforms='all')
     scrapy_model.search(urls)
 
     # init model
-    model = DiscountModel(scrapy_model, strategy_type='familiar')
+    model = DiscountModel(scrapy_model, strategy_type='cheap')
     products_acceptable_items = model.analysis()
     print(products_acceptable_items)

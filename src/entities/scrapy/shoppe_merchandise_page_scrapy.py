@@ -12,7 +12,7 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
         self.driver.get(url)
 
         name = self._get_name()
-        price = self._get_origin_price()
+        price = self._get_original_price()
         sale_price = self._get_sale_price()
         md = {
             'name': name,
@@ -32,7 +32,7 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
         print('name:', name)
         return name
 
-    def _get_origin_price(self):
+    def _get_original_price(self):
         ORIGIN_PRICE_CLASS = '_3_ISdg'
         self._wait(ORIGIN_PRICE_CLASS)
 
