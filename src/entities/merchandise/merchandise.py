@@ -23,7 +23,13 @@ class Merchandise(object):
             "md_type": self.md_type
         }
 
-
+    def is_complete(self):
+        print('name: {}, price: {}, platform: {}'.format(self.name,
+                                                         self.price,
+                                                         self.platform))
+        if self.name is None or self.price is None or self.platform is None:
+            return False
+        return True
 
     @staticmethod
     def from_dict(md_dict: dict):

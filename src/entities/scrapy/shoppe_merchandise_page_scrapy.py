@@ -6,19 +6,26 @@ class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
-        self.PLAT_FORM = 'shoppe'
+        self.PLATFORM = 'shoppe'
 
     def parse(self, url):
         self.driver.get(url)
 
         name = self._get_name()
-        price = self._get_original_price()
+        original_price = self._get_original_price()
         sale_price = self._get_sale_price()
+
+        if sale_price is not None:
+            price = sale_price
+        elif original_price is not None:
+            price = original_price
+        else:
+            price = None
+
         md = {
             'name': name,
             'price': price,
-            'sale_price': sale_price,
-            'platform': self.PLAT_FORM,
+            'platform': self.PLATFORM,
             'url': url
         }
         return md

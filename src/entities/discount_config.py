@@ -24,6 +24,7 @@ config = {
             {"constraint": {"type": "單筆", "value": "500", 'platform': 'pchome'},
              'feedback': {"type": "現金", "value": "100"}
              },
+
         ]
     },
     "PCHOME-Magic卡": {
@@ -33,6 +34,8 @@ config = {
             {"constraint": {"type": "單筆", "value": "500", 'platform': 'pchome'},
              'feedback': {"type": "現金", "value": "200"}
              },
+            
         ]
     },
+
 }

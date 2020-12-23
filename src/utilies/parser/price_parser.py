@@ -16,4 +16,4 @@ class PriceParser:
                     return int(token)
             return None
         else:
-            raise ValueError('Type of price error')
+            return None

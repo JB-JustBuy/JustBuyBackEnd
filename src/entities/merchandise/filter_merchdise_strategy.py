@@ -26,7 +26,10 @@ class CheapFilterStrategy(FilterStrategyInterface):
         return confirmed_md
 
     def __is_cheap(self, merchandise: Merchandise):
-        return merchandise.price <= self.ref_md.price
+        if merchandise.price is None:
+            return False
+        else:
+            return merchandise.price <= self.ref_md.price
 
     def __is_same_platform(self, merchandise: Merchandise):
         if self.platform is None:
@@ -51,8 +54,11 @@ class FamiliarFilterStrategy(FilterStrategyInterface):
         return confirmed_md
 
     def __is_in_price_range(self, merchandise: Merchandise):
-        return self.ref_md.price * 1 - self.price_range <= merchandise.price \
-               <= self.ref_md.price * 1 + self.price_range
+        if merchandise.price is None:
+            return False
+        else:
+            return self.ref_md.price * 1 - self.price_range <= merchandise.price \
+                   <= self.ref_md.price * 1 + self.price_range
 
     def __is_same_platform(self, merchandise: Merchandise):
         if self.platform is None:
@@ -60,3 +66,13 @@ class FamiliarFilterStrategy(FilterStrategyInterface):
         else:
             return merchandise.platform == self.platform
 
+
+class UpLimitFilterStrategy(filter):
+    def __init__(self, up_limit):
+        self.up_limit = up_limit
+
+    def filter(self, merchandises: list):
+        if len(merchandises) > self.up_limit:
+            return merchandises[: self.up_limit]
+        else:
+            return merchandises

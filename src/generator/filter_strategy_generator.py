@@ -14,5 +14,10 @@ class FilterStrategyGenerator:
                 return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, price_range)
             else:
                 return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, 0.1)
+        elif strategy_type == 'up_limit':
+            if "up_limit" in kwargs and isinstance(kwargs['up_limit'], int):
+                up_limit = kwargs['up_limit']
+                return filter_merchdise_strategy.UpLimitFilterStrategy(up_limit)
+            return filter_merchdise_strategy.UpLimitFilterStrategy(5)
         else:
             raise ValueError("strategy_type is not acceptable")
