@@ -1,12 +1,12 @@
 from src.entities.feedback_method.feedback_method import FeedBackMethod
-from src.entities.feedback_constraint.single_full import SingleFull
-from src.entities.feedback_form.cash import Cash
 from src.generator.filter_strategy_generator import FilterStrategyGenerator
-from src.entities.payment.credit_card import CreditCard
+from src.generator.payment_generator import PaymentGenerator
+from src.generator.constraint_generator import ConstraintGenerator
+from src.generator.feedback_generator import FeedBackGenerator
 from src.entities.discount_config import config
 from src.entities.merchandise.merchandise import Merchandise
-from itertools import product
 from src.entities.payment.payment import Payment
+from itertools import product
 import numpy as np
 import json, os
 
@@ -97,25 +97,25 @@ class DiscountModel:
         for name, config in model_config.items():
             type = config['type']
             belong = config['belong']
-            if type == 'CreditCard' or type == '信用卡' or type == 'credit card':
-                payment = CreditCard(name, belong)
-            else:
-                raise ValueError("payment config error")
+            payment = PaymentGenerator.generate_payment(type, name=name, belong=belong)
 
             for method in config['methods']:
-                if method['constraint']['type'] == '單筆':
-                    constraint = SingleFull(int(method['constraint']['value']))
-                else:
-                    raise ValueError('constraint config error')
-                if method['feedback']['type'] == '現金':
-                    feedback = Cash(int(method['feedback']['value']))
-                else:
-                    raise ValueError('feedback config error')
+                # set constraint
+                constraint_type = method['constrain']['type']
+                value = method['constrain']['value']
+
+                constraint = ConstraintGenerator.generate_constraint(constraint_type, value=value)
+
+                # set feedback
+                feedback_type = method['feedback']['type']
+                value = method['feedback']['value']
+                feedback = FeedBackGenerator.generate_feedback(feedback_type, value=value)
+
+                # add to payment
                 payment.add_method(FeedBackMethod(constraint, feedback))
 
             if payment != None:
                 self.payments.append(payment)
-
 
     def calculate_feedback(self, merchandises: dict) -> (Payment, int):
         merchandises_list = merchandises.values()
