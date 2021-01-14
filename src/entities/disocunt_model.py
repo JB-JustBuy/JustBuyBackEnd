@@ -37,6 +37,7 @@ class DiscountModel:
     #     merchandises = self.handle_select_merchandise_by_strategy(merchandises)
     #     payment, feedback = self.calculate(merchandises)
     #     return payment, feedback
+
     def get_permutations_feedback(self, permutations: list):
         """
 
@@ -101,8 +102,8 @@ class DiscountModel:
 
             for method in config['methods']:
                 # set constraint
-                constraint_type = method['constrain']['type']
-                value = method['constrain']['value']
+                constraint_type = method['constraint']['type']
+                value = method['constraint']['value']
 
                 constraint = ConstraintGenerator.generate_constraint(constraint_type, value=value)
 
@@ -151,8 +152,9 @@ if __name__ == '__main__':
     FORMAT = '%(asctime)s %(levelname)s: %(message)s'
     logging.basicConfig(level=logging.DEBUG, filename='myLog.log', filemode='w', format=FORMAT)
 
-    urls = ["https://24h.pchome.com.tw/prod/DGBJA7-1900B1QBE",
-            'https://24h.pchome.com.tw/prod/DYAN3U-A900B1KWU']
+    urls = ["https://24h.pchome.com.tw/prod/DGBJA7-A9009QSCJ",
+            'https://24h.pchome.com.tw/prod/DYAQ12-A9008MMZF']
+
     scrapy_model = ScrapyModel.generate_scrapy_model(platforms='all')
     scrapy_model.search(urls)
 

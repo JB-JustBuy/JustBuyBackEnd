@@ -39,8 +39,9 @@ class PChomeSearchingEngineScrapy(SearchEngineScrapy):
         price = int(elem_value.get_attribute("innerHTML").splitlines()[0].replace(',', ""))
         return price
 
+
 if __name__ == '__main__':
     print(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-    dc = PChomeSearchingEngineScrapy()
-    dc.search(['羅技G604'])
+    dc = PChomeSearchingEngineScrapy(SearchEngineScrapy.get_driver())
+    dc.search(['SONY PS4 Pro主機CUH-7218系列 1TB-極致黑'])
     print(dc.result)

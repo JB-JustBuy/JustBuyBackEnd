@@ -4,7 +4,7 @@ from flask_restful import Api
 from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from src.repository.db import initialize_db
-from src.resources.search_merchandise_controller import SearchMerchandiseController
+from src.resources.search_merchandise_controller import SearchByUrlController
 from src.resources.auth import init_auth
 from src.resources.user import init_user
 
@@ -35,8 +35,9 @@ def index():
     data = request.json
     return data if data != None else {"status": "error"}
 
-api.add_resource(SearchMerchandiseController, "/api/search")
+api.add_resource(SearchByUrlController, "/api/search")
+
 init_auth(api)
 init_user(api)
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

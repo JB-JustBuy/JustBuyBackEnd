@@ -16,4 +16,4 @@ class BestPlanService:
         model = DiscountModel(scrapy_model, 'familiar')
 
         # new model and calculate best plan
-        model.calculate()
+        model.analysis()

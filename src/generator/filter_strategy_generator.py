@@ -13,7 +13,7 @@ class FilterStrategyGenerator:
                             0 <= kwargs['price_range'] <= 1 else 0.1
                 return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, price_range)
             else:
-                return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, 0.1)
+                return filter_merchdise_strategy.FamiliarFilterStrategy(reference_merchandise, 0.3)
         elif strategy_type == 'up_limit':
             if "up_limit" in kwargs and isinstance(kwargs['up_limit'], int):
                 up_limit = kwargs['up_limit']

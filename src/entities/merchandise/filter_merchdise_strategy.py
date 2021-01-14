@@ -48,8 +48,7 @@ class FamiliarFilterStrategy(FilterStrategyInterface):
             print('find md price:{} and ref_md price:{}'.format(merchandise.price,
                                                                 self.ref_md.price))
             if self.__is_in_price_range(merchandise) and \
-                self.__is_same_platform(merchandise):
-
+                    self.__is_same_platform(merchandise):
                 confirmed_md.append(merchandise)
         return confirmed_md
 
@@ -57,8 +56,12 @@ class FamiliarFilterStrategy(FilterStrategyInterface):
         if merchandise.price is None:
             return False
         else:
-            return self.ref_md.price * 1 - self.price_range <= merchandise.price \
-                   <= self.ref_md.price * 1 + self.price_range
+            is_in_range = self.ref_md.price * (1 - self.price_range) <= merchandise.price \
+                          <= self.ref_md.price * (1 + self.price_range)
+            print(' is price not in {} to {}: {}'.format(self.ref_md.price * (1 - self.price_range),
+                                                         self.ref_md.price * (1 + self.price_range),
+                                                         is_in_range))
+            return is_in_range
 
     def __is_same_platform(self, merchandise: Merchandise):
         if self.platform is None:

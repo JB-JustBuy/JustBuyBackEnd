@@ -3,6 +3,7 @@ from src.generator.searching_engine_scrapy import SearchingEngineScrapyGenerator
 from src.generator.merchandise_page_scrapy_generator import MerchandisePageScrapyGenerator
 from src.utilies.parser.url_parser import UrlParser
 
+
 class ScrapyModel:
     def __init__(self):
         self.driver = Scrapy.get_driver()
@@ -25,8 +26,8 @@ class ScrapyModel:
         self.search_products_in_platform_engine(keywords, 'all')
         self.driver.close()
 
-
     def get_merchandises_by_urls(self, urls):
+        print('urls:', urls)
         for url in urls:
             merchandise = self.get_merchandise_by_url(url)
             print('get', merchandise, 'from', url)
