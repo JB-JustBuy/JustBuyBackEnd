@@ -1,12 +1,14 @@
 from src.entities.feedback_constraint.feedback_constraint import FeedBackConstraint
 from src.entities.merchandise.merchandise import Merchandise
 
+
 class SingleFull(FeedBackConstraint):
     def __init__(self, amount: int, platform=None, md_type=None):
         super().__init__()
         self.amount = amount
         self.platform = platform
         self.md_type = md_type
+        self.name = "單筆滿額"
 
     def qualify(self, merchandises: list):
         """
@@ -33,4 +35,4 @@ class SingleFull(FeedBackConstraint):
         return merchandise.platform == self.platform if self.platform else True
 
     def _is_md_type_conform(self, merchandise: Merchandise):
-        return merchandise.type == self.platform if self.md_type else True
+        return merchandise.md_type == self.platform if self.md_type else True

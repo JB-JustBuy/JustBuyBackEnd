@@ -4,6 +4,8 @@ from src.entities.merchandise.merchandise import Merchandise
 
 class QuantityEnough(FeedBackConstraint):
     def __init__(self, quantity: int, platform: str, md_type: str):
+        super().__init__()
+        self.name = "買{}件商品".format(quantity)
         self.quantity = quantity
         self.platform = platform
         self.md_type = md_type

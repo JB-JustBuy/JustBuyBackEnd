@@ -37,7 +37,7 @@ config = {
 
         ]
     },
-    "花旗銀行": {
+    "花光你錢卡": {
         'type': 'CreditCard',
         'belong': '花旗銀行',
         'methods': [

@@ -20,6 +20,11 @@ class DiscountModel:
         self.product_candidate_limit = 5
 
     def analysis(self):
+        """
+        將scrapy撈到的資料轉換成Merchandise,
+        透過Strategy選擇符合條件的商品後, 計算所有可能中優惠前幾高的方案
+        :return:
+        """
         acceptable_mds = self.get_products_acceptable_merchandises()
         product_permutations = self.__get_permutations(acceptable_mds)
         payment_feedback = self.get_permutations_feedback(product_permutations)
@@ -40,19 +45,23 @@ class DiscountModel:
 
     def get_permutations_feedback(self, permutations: list):
         """
-
+        計算所有排列組合的回饋
         :param permutations: [permutation1, permutation2, permutation3...]
         :return: [[payment1, feedback1], [payment2, feedback2], ...]
         """
         payment_and_feedback = []
         for permutation in permutations:
             payment, feedback = self.calculate_feedback(permutation)
-            payment_and_feedback.append([payment, feedback])
-            print(payment, feedback)
+            payment_and_feedback.append([payment.to_dict(), feedback])
+            print(payment.to_dict(), feedback)
 
         return payment_and_feedback
 
     def get_products_acceptable_merchandises(self) -> dict:
+        """
+        透落FilterStrategy過濾Scrapy到的商品, 減少candidate
+        :return:
+        """
         products_acceptable_md = {}
         product_names = self.scrapy_model.keywords
         ref_mds = self.scrapy_model.md_by_url
@@ -71,14 +80,28 @@ class DiscountModel:
         return products_acceptable_md
 
     def get_config(self):
+        """
+            輸出 model的參數資料
+        :return:
+        """
         return json.dumps({
             'payments': [payment.to_dict() for payment in self.payments],
         }, indent=1)
 
     def __get_permutations(self, merchandises: dict):
+        """
+        Get商品的排列組合
+        :param merchandises: Dict
+        :return:
+        """
         return [dict(zip(merchandises, v)) for v in product(*merchandises.values())]
 
     def __get_merchandise_from_scrapy_model_by_platform(self, platform: str):
+        """
+        獲得Scrapy Model中特定平台的商品
+        :param platform:
+        :return:
+        """
         for key, data in self.scrapy_model.scrapies.items():
             if key == platform:
                 merchandises = Merchandise.from_searching_engine_scrapy_result(data['scrapy'].result)
@@ -88,6 +111,11 @@ class DiscountModel:
         raise ValueError('Cant find the search result in {} platform'.format(platform))
 
     def __get_merchandise_from_scrapy_model_by_product_name(self, product_name: str):
+        """
+        獲得Scrapy Model中特定名稱的商品
+        :param product_name:
+        :return:
+        """
         products = []
         for platform, platform_scrapies in self.scrapy_model.scrapies.items():
             merchandises = Merchandise.from_searching_engine_scrapy_result(platform_scrapies['engine_scrapy'].result)
@@ -95,6 +123,11 @@ class DiscountModel:
         return products
 
     def __set_config(self, model_config: dict):
+        """
+        利用設定檔設定Discount Model
+        :param model_config:
+        :return:
+        """
         for name, config in model_config.items():
             type = config['type']
             belong = config['belong']
@@ -134,10 +167,11 @@ class DiscountModel:
             print(e)
 
     def __filter_product_by_strategy(self, search_items: list, ref_md: Merchandise) -> list:
+        """"
 
-        """
-        :input: [md1_001, md1_002, md1_003, md1_004, md1_005, md1_006]
-        :return: [md1_001, md1_002, md1_003],
+        :param search_items: list, like [md1_001, md1_002, md1_003, md1_004, md1_005, md1_006]
+        :param ref_md: Merchandise,
+        :return: list, like [md1_001, md1_002, md1_003]
         """
 
         filter_merchandise_strategy = FilterStrategyGenerator.generate_strategy(self.strategy_type, ref_md)

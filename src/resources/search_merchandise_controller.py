@@ -30,5 +30,5 @@ class SearchByUrlController(Resource):
 
         # call discount analysis to find best return method
         discount_model = DiscountModel(scrapy_model)
-        feed_back = discount_model.analysis()
-        return feed_back
+        payment_feed_back = discount_model.analysis()
+        return payment_feed_back, 200

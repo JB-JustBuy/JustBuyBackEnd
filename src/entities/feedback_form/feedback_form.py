@@ -12,6 +12,14 @@ class FeedBackForm(metaclass=abc.ABCMeta):
         pass
 
     def to_dict(self):
+        output = {}
+        if self.amount is not None:
+            output['amount'] = self.amount
+        if self.pct is not None:
+            output['pct'] = self.pct
+        if self.md is not None:
+            output['md'] = self.md.to_dict()
+
         return {
             'amount': self.amount,
             'pct': self.pct,
