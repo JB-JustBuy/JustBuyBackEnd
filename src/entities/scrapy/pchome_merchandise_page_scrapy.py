@@ -2,8 +2,8 @@ from src.entities.scrapy.searching_merchandise_page_scrapy import MerchandisePag
 
 
 class PchomeMerchandisePageScrapy(MerchandisePageScrapy):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self):
+        super().__init__()
         self.platform = 'pchome'
 
     def parse(self, url):

@@ -3,8 +3,8 @@ import os
 
 
 class PChomeSearchingEngineScrapy(SearchEngineScrapy):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self):
+        super().__init__()
         self.url = "https://ecshweb.pchome.com.tw/search/v3.3/?q="
         self.platform = "pchome"
 

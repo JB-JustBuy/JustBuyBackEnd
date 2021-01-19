@@ -4,10 +4,10 @@ from src.entities.scrapy.shoppe_searching_engine_scrapy import ShoppeSearchingEn
 
 class SearchingEngineScrapyGenerator:
     @staticmethod
-    def generate_scrapy(platform, driver):
+    def generate_scrapy(platform):
         if platform == 'shopee':
-            return ShoppeSearchingEngineScrapy(driver)
+            return ShoppeSearchingEngineScrapy()
         elif platform == 'pchome':
-            return PChomeSearchingEngineScrapy(driver)
+            return PChomeSearchingEngineScrapy()
         else:
             raise ValueError('Cant generate {} searching engine scrapy'.format(platform))

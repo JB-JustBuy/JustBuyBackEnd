@@ -3,8 +3,8 @@ import abc, time, logging
 
 
 class SearchEngineScrapy(Scrapy):
-    def __init__(self, driver):
-        super().__init__(driver)
+    def __init__(self):
+        super().__init__()
         self.url = None
         self.platform = None
         self.result = {}

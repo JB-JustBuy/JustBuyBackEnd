@@ -3,9 +3,8 @@ import time
 
 
 class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
+    def __init__(self):
+        super().__init__()
         self.PLATFORM = 'shoppe'
 
     def parse(self, url):

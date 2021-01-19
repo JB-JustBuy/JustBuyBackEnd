@@ -30,19 +30,6 @@ class DiscountModel:
         payment_feedback = self.get_permutations_feedback(product_permutations)
         return payment_feedback
 
-    # def handle_select_merchandise_by_strategy(self, merchandises):
-    #     selected = {}
-    #     for name, searched_merchandises in merchandises.items():
-    #         self.select_merchandise_strategy = self._get_strategy(searched_merchandises)
-    #         selected[name] = self.select_merchandise_strategy.find_ideal(searched_merchandises)
-    #     return selected
-    #
-    # def find_best_discount_from_one_paltform_scrapy_result(self, platform: str):
-    #     merchandises = self.__get_merchandise_from_scrapy_model(platform)
-    #     merchandises = self.handle_select_merchandise_by_strategy(merchandises)
-    #     payment, feedback = self.calculate(merchandises)
-    #     return payment, feedback
-
     def get_permutations_feedback(self, permutations: list):
         """
         計算所有排列組合的回饋

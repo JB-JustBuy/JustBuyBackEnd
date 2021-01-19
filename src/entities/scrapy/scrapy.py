@@ -1,13 +1,12 @@
 from selenium import webdriver
-import abc, time, logging
+import abc, time, logging, platform, os
 from selenium.webdriver import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
-import abc
 
 
 class Scrapy(metaclass=abc.ABCMeta):
-    def __init__(self, driver):
-        self.driver = driver
+    def __init__(self):
+        self.driver = Scrapy.get_driver()
 
     def _wait(self, check_token):
         while check_token not in self.driver.find_element_by_xpath('//body').get_attribute('innerHTML'):
@@ -17,7 +16,11 @@ class Scrapy(metaclass=abc.ABCMeta):
     @staticmethod
     def get_driver():
         options = Scrapy.get_chrome_options()
-        driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+        if platform.system() == 'Darwin': # Mac
+            path = os.path.abspath(os.path.join(__file__, '..', "..", '..', "..", 'chromedriver'))
+            driver = webdriver.Chrome(path, options=options)
+        else:
+            driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
         return driver
 
     @staticmethod
@@ -29,7 +32,7 @@ class Scrapy(metaclass=abc.ABCMeta):
         # options.add_experimental_option('prefs', prefs)
 
         # hide the web driver window
-        #options.add_argument("--headless")
+        options.add_argument("--headless")
         return options
 
     def hover(self, element):

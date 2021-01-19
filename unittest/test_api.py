@@ -1,8 +1,8 @@
 import unittest
 from flask import Flask
 from flask_restful import Api, Resource
-from flask_restful.utils import cors
 from flask_cors import CORS
+
 
 class TestCORSCase(unittest.TestCase):
     def test_crossdomain(self):

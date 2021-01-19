@@ -38,7 +38,6 @@ class ScrapyModel:
         if url_platform in self.__scrapies.keys():
             return self.__scrapies[url_platform]['md_page_scrapy'].parse(url)
 
-
     def search_products_in_platform_engine(self, keywords: list, scrapy_key: str):
         self.keywords = keywords
         print('keywords:', self.keywords)
@@ -54,10 +53,10 @@ class ScrapyModel:
     def add_scrapy(self, name: str):
         if name in self.__acception:
             self.__scrapies[name] = {}
-            self.__scrapies[name]['engine_scrapy'] = SearchingEngineScrapyGenerator.generate_scrapy(name, self.driver)
-            self.__scrapies[name]['md_page_scrapy'] = MerchandisePageScrapyGenerator.generate_scrapy(name, self.driver)
-        # else:
-        #     raise ValueError("scrapy model add_scrapy:: {} is not validate".format(name))
+            self.__scrapies[name]['engine_scrapy'] = SearchingEngineScrapyGenerator.generate_scrapy(name)
+            self.__scrapies[name]['md_page_scrapy'] = MerchandisePageScrapyGenerator.generate_scrapy(name)
+        else:
+            raise ValueError("scrapy model add_scrapy:: {} is not validate".format(name))
 
     @staticmethod
     def generate_scrapy_model(platforms: str or list):
