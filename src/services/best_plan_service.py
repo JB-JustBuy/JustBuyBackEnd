@@ -21,7 +21,3 @@ class BestPlanService:
         # result = model.analysis()
         print("End plan service")
         return 0
-
-    def test(self):
-        driver = Scrapy.get_driver()
-        return 200

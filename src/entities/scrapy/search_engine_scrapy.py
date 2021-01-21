@@ -13,7 +13,7 @@ class SearchEngineScrapy(Scrapy):
         logging.info(__name__+' start search:')
         for search_key in search_keys:
             # open new window
-            self.switch_to_new_tab(self.url + search_key, self.driver)
+            self.switch_to_new_tab(self.url+search_key, self.driver)
             time.sleep(2)
 
             # scrapy the info on web

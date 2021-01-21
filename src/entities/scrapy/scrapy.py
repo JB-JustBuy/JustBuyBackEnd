@@ -46,6 +46,7 @@ class Scrapy(metaclass=abc.ABCMeta):
     @staticmethod
     def switch_to_new_tab(url: str, driver):
         idx = len(driver.window_handles)
+        print('Go to url:', url)
         driver.execute_script("window.open('{}')".format(url))
         time.sleep(1)
         driver.switch_to.window(driver.window_handles[idx])

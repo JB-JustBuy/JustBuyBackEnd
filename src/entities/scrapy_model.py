@@ -29,7 +29,7 @@ class ScrapyModel:
 
         # quit is close all tab in driver
         self.driver.quit()
-        
+
     def get_merchandises_by_urls(self, urls):
         print('urls:', urls)
         for url in urls:
@@ -100,5 +100,4 @@ if __name__ == '__main__':
     urls = ["https://24h.pchome.com.tw/prod/DGBJA7-A9009QSCJ",
             "https://24h.pchome.com.tw/prod/DYAQ12-A9008MMZF"]
     model.search(urls)
-    print(model.__dict__())
 
