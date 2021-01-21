@@ -39,7 +39,6 @@ def index():
 
 
 api.add_resource(SearchByUrlController, "/api/v1/search",)
-
 init_auth(api)
 init_user(api)
 

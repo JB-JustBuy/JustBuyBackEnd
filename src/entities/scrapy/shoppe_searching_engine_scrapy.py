@@ -3,8 +3,8 @@ import time
 
 
 class ShoppeSearchingEngineScrapy(SearchEngineScrapy):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, driver):
+        super().__init__(driver)
         self.url = "https://shopee.tw/search?keyword="
         self.platform = "shoppe"
 

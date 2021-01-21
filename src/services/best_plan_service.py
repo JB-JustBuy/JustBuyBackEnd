@@ -13,7 +13,7 @@ class BestPlanService:
         scrapy_model = ScrapyModel.generate_scrapy_model('all')
         print("Generate Scrapy Model")
 
-        # scrapy_model.search(self.urls)
+        scrapy_model.search(self.urls)
         # create planning model
         # model = DiscountModel(scrapy_model)
 

@@ -2,7 +2,7 @@
 class UrlParser:
     @staticmethod
     def recognize_platform(url):
-        print('url:', url, 'is belong', end='')
+        print('url:', url, 'is belong ', end='')
         if 'shopee' in url:
             print('shopee')
             return 'shopee'

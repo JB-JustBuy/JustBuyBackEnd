@@ -3,13 +3,15 @@ import time
 
 
 class ShoppeMerchandisePageScrapy(MerchandisePageScrapy):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, driver):
+        super().__init__(driver)
         self.PLATFORM = 'shoppe'
 
     def parse(self, url):
-        self.driver.get(url)
+        # open in new tab
+        self.switch_to_new_tab(url, self.driver)
 
+        # scrapy info on web
         name = self._get_name()
         original_price = self._get_original_price()
         sale_price = self._get_sale_price()

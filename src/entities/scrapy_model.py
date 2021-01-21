@@ -12,6 +12,8 @@ class ScrapyModel:
         self.keywords = None
         self.md_by_url = {}
 
+
+
     @property
     def scrapies(self):
         return self.__scrapies
@@ -24,8 +26,10 @@ class ScrapyModel:
 
         # 在所有平台搜尋相似產品
         self.search_products_in_platform_engine(keywords, 'all')
-        self.driver.close()
 
+        # quit is close all tab in driver
+        self.driver.quit()
+        
     def get_merchandises_by_urls(self, urls):
         print('urls:', urls)
         for url in urls:
@@ -37,6 +41,8 @@ class ScrapyModel:
         url_platform = UrlParser.recognize_platform(url)
         if url_platform in self.__scrapies.keys():
             return self.__scrapies[url_platform]['md_page_scrapy'].parse(url)
+        else:
+            raise ValueError("Cant find {} scraper in Scrapy Model".format(url_platform))
 
     def search_products_in_platform_engine(self, keywords: list, scrapy_key: str):
         self.keywords = keywords
@@ -53,8 +59,8 @@ class ScrapyModel:
     def add_scrapy(self, name: str):
         if name in self.__acception:
             self.__scrapies[name] = {}
-            self.__scrapies[name]['engine_scrapy'] = SearchingEngineScrapyGenerator.generate_scrapy(name)
-            self.__scrapies[name]['md_page_scrapy'] = MerchandisePageScrapyGenerator.generate_scrapy(name)
+            self.__scrapies[name]['engine_scrapy'] = SearchingEngineScrapyGenerator.generate_scrapy(name, self.driver)
+            self.__scrapies[name]['md_page_scrapy'] = MerchandisePageScrapyGenerator.generate_scrapy(name, self.driver)
         else:
             raise ValueError("scrapy model add_scrapy:: {} is not validate".format(name))
 
@@ -86,12 +92,13 @@ class ScrapyModel:
 
 
 
+
 if __name__ == '__main__':
     import json
     model = ScrapyModel.generate_scrapy_model('all')
     #
-    urls = ['https://shopee.tw/%E3%80%90%E5%85%A8%E6%96%B0%E3%80%91-PS4-Slim-500GB-1TB-%E7%99%BD-%E9%BB%91-%E4%B8%BB%E6%A9%9F-%E5%8F%B0%E7%81%A3%E5%85%AC%E5%8F%B8%E8%B2%A8-CUH-2218A-%E5%8F%AF%E9%9D%A2%E4%BA%A4-Pro-%E9%AD%94%E7%89%A9%E7%8D%B5%E4%BA%BA-i.14159223.1326072367']
-
+    urls = ["https://24h.pchome.com.tw/prod/DGBJA7-A9009QSCJ",
+            "https://24h.pchome.com.tw/prod/DYAQ12-A9008MMZF"]
     model.search(urls)
     print(model.__dict__())
 

@@ -2,15 +2,23 @@ from selenium import webdriver
 import abc, time, logging, platform, os
 from selenium.webdriver import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 
 
 class Scrapy(metaclass=abc.ABCMeta):
-    def __init__(self):
-        self.driver = Scrapy.get_driver()
+    def __init__(self, driver):
+        if driver is None:
+            self.driver = Scrapy.get_driver()
+        else:
+            self.driver = driver
 
     def _wait(self, check_token):
+        count = 0
         while check_token not in self.driver.find_element_by_xpath('//body').get_attribute('innerHTML'):
             time.sleep(1)
+            count += 1
+            if count > 20:
+                raise RuntimeError('Cant find specific tag in Scrapy')
         return
 
     @staticmethod
@@ -32,8 +40,16 @@ class Scrapy(metaclass=abc.ABCMeta):
         # options.add_experimental_option('prefs', prefs)
 
         # hide the web driver window
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         return options
+
+    @staticmethod
+    def switch_to_new_tab(url: str, driver):
+        idx = len(driver.window_handles)
+        driver.execute_script("window.open('{}')".format(url))
+        time.sleep(1)
+        driver.switch_to.window(driver.window_handles[idx])
+        return driver.current_window_handle
 
     def hover(self, element):
         ActionChains(self.driver).move_to_element(element).perform()

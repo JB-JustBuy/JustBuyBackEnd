@@ -2,13 +2,16 @@ from src.entities.scrapy.searching_merchandise_page_scrapy import MerchandisePag
 
 
 class PchomeMerchandisePageScrapy(MerchandisePageScrapy):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, driver):
+        super().__init__(driver)
         self.platform = 'pchome'
 
     def parse(self, url):
-        self.driver.get(url)
+        # open in new tab and wait for loading
+        self.switch_to_new_tab(url, self.driver)
         self._wait('prod_describe')
+
+        # scrapy the info on web
         name = self.__get_name()
         original_price = self.__get_original_price()
         sale_price = self.__get_sale_price()
